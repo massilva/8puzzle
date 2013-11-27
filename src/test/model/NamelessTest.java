@@ -48,7 +48,8 @@ public class NamelessTest extends TestCase{
 		assertEquals(0, nl.manhattanDistance(s1));
 		
 		int [][] s2 = {{7,2,4},{5,0,6},{8,3,1}};
-		assertEquals(20, nl.manhattanDistance(s2));
+		assertEquals(18, nl.manhattanDistance(s2));
+		
 	}
 	
 }

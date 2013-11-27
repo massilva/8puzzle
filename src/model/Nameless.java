@@ -28,10 +28,13 @@ public class Nameless {
 	public int manhattanDistance(int [][] state){
 		int some = 0;
 		
+		//Assumes the order of number into state, instead of ascending order
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 3; j++){
-				Position positionDefault = getPositionDefault(state[i][j]);
-				some += Math.abs(positionDefault.getI() - i) + Math.abs(positionDefault.getJ() - j);
+				if(state[i][j] != 0){ //DO NOT sum the default distance of empty space.
+					Position positionDefault = getPositionDefault(state[i][j]);
+					some += Math.abs(positionDefault.getI() - i) + Math.abs(positionDefault.getJ() - j);
+				}
 			}
 		}
 		
