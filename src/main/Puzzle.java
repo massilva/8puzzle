@@ -1,11 +1,12 @@
-package test;
-
-import java.util.Iterator;
+package main;
 
 import jade.core.Agent;
 
+import java.util.Iterator;
+
 @SuppressWarnings("serial")
-public class Hello extends Agent {
+public class Puzzle extends Agent {
+
 	protected void setup() {
 		System.out.println( " Hello World . Eu sou um agente !" ) ;
 		System.out.println( " Todas as minhas informacoes : \n" + getAID());
