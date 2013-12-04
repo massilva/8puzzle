@@ -1,8 +1,10 @@
 package main;
 
 import jade.core.Agent;
-
+import jade.core.behaviours.OneShotBehaviour;
 import java.util.Iterator;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
 public class Puzzle extends Agent {
@@ -19,5 +21,32 @@ public class Puzzle extends Agent {
 		while(it.hasNext()){
 			System.out.println("- "+it.next());
 		}
+
+		// Adicionando novo behaviour ao agente
+		this.addBehaviour(new StartBehaviour(this));
+	}
+}
+
+private class StartBehaviour extends OneShotBehaviour()
+{
+	// Construtor para setar a variavel myAgent (representação do agente no behaviour)
+	public StartBehaviour(Agent a)
+	{
+		this.myAgent = a;
+	}
+
+	public void action() 
+	{
+		// Cria um template de mensagem (baseado no Performative INFORM)
+		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+		
+		// Loop ate que uma mensagem do tipo INFORM seja recebida pelo agente
+		do
+		{
+			ACLMessage msg = receive(mt);
+		}while (msg != null)
+
+		// Adição do primeiro behaviour de processamento do agente
+		// myAgent.addBehaviour(new xxxxxBehaviour())
 	}
 }
