@@ -1,8 +1,10 @@
 package main;
 
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
+
 import java.util.Iterator;
+
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -16,7 +18,7 @@ public class Puzzle extends Agent {
 		System.out.println( "Meu nome global (GUID)  eh  "+ getAID().getName());
 		System.out.println( "Meus endereços são: ") ;
 		
-		Iterator it = getAID().getAllAddresses();
+		Iterator<?> it = getAID().getAllAddresses();
 		
 		while(it.hasNext()){
 			System.out.println("- "+it.next());
@@ -25,28 +27,38 @@ public class Puzzle extends Agent {
 		// Adicionando novo behaviour ao agente
 		this.addBehaviour(new StartBehaviour(this));
 	}
-}
 
-private class StartBehaviour extends OneShotBehaviour()
-{
-	// Construtor para setar a variavel myAgent (representação do agente no behaviour)
-	public StartBehaviour(Agent a)
+	public class StartBehaviour extends SimpleBehaviour
 	{
-		this.myAgent = a;
-	}
-
-	public void action() 
-	{
-		// Cria um template de mensagem (baseado no Performative INFORM)
-		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+		private boolean end;
 		
-		// Loop ate que uma mensagem do tipo INFORM seja recebida pelo agente
-		do
+		// Construtor para setar a variavel myAgent (representação do agente no behaviour)
+		public StartBehaviour(Agent a)
 		{
-			ACLMessage msg = receive(mt);
-		}while (msg != null)
+			this.myAgent = a;
+			end = false;
+		}
+	
+		public void action() 
+		{
+			// Cria um template de mensagem (baseado no Performative INFORM)
+			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+			ACLMessage msg = blockingReceive(mt);
+			
+			if (msg != null)
+				end = true;
+		}
 
-		// Adição do primeiro behaviour de processamento do agente
-		// myAgent.addBehaviour(new xxxxxBehaviour())
+		@Override
+		public boolean done() {
+			return end;
+		}
+		
+		public int takeDown()
+		{
+			// Adição do primeiro behaviour de processamento do agente
+			// myAgent.addBehaviour(new xxxxxBehaviour())
+			return 0;
+		}
 	}
 }
