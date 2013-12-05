@@ -66,7 +66,12 @@ public class Node {
 
 	@Override
 	public String toString(){
-		return "Node [state=" + Arrays.toString(state) + ", parent=" + parent
+		String st = "";
+		for (int [] obj : state){
+			st += Arrays.toString(obj);
+		}
+		
+		return "Node [state=" + st + ", parent=" + parent
 				+ ", parentAction=" + parentAction + ", cost=" + cost + "]";
 	}
 	

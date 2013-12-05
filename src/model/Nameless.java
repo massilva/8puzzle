@@ -41,4 +41,22 @@ public class Nameless {
 		return some;
 	}
 	
+	public boolean isObjetiveState(int [][] state){
+		int [][] objetiveState = {{0,1,2},{3,4,5},{6,7,8}};
+		int  i = 0, j = 0;
+		while(i < objetiveState.length){
+			while(j < objetiveState.length && objetiveState[i][j] == state[i][j]){
+				j++;
+			}
+			if(j != objetiveState.length){
+				break;
+			}
+			i++;
+		}
+		if(i == objetiveState.length && j == objetiveState.length){
+			return true;
+		}
+		return false;
+	}
+	
 }
