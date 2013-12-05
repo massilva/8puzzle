@@ -56,13 +56,14 @@ public class Puzzle extends Agent{
 
 		@Override
 		public boolean done(){
-			// Adição do primeiro behaviour de processamento do agente
-			addBehaviour(new ThinkBehaviour(this.myAgent,this.entrada));
 			return end;
 		}
 		
-		public int takeDown()
+		@Override
+		public int onEnd()
 		{
+			// Adição do primeiro behaviour de processamento do agente
+			addBehaviour(new ThinkBehaviour(this.myAgent,this.entrada));
 			return 0;
 		}
 		
