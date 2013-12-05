@@ -37,10 +37,14 @@ public class Nameless {
 				}
 			}
 		}
-		
 		return some;
 	}
 	
+	/**
+	 * 
+	 * @param state 
+	 * @return TRUE if @param state is the objetive state FALSE else
+	 */
 	public boolean isObjetiveState(int [][] state){
 		int [][] objetiveState = {{0,1,2},{3,4,5},{6,7,8}};
 		int  i = 0, j = 0;
@@ -59,4 +63,80 @@ public class Nameless {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param state 
+	 * @return the actions available for @param state
+	 */
+	public char [] availableAction(int [][] state){
+		Position emBranco = getTileEmpty(state);
+		//coluna
+		if(emBranco.getJ() == 0){
+			if(emBranco.getI() == 0){ //linha
+				char [] acoes = {'R','D'};//direita e a baixo;
+				return acoes;
+			}
+			if(emBranco.getI() == 1){ //linha
+				char [] acoes = {'R','D','U'};//direita, a baixo e acima;
+				return acoes;
+			}
+			if(emBranco.getI() == 2){//linha
+				char [] acoes = {'R','U'};//direita e acima;
+				return acoes;
+			}
+		}
+		//coluna
+		if(emBranco.getJ() == 1){
+			if(emBranco.getI() == 0){ //linha
+				char [] acoes = {'L','D','R'};//direita e a baixo;
+				return acoes;
+			}
+			if(emBranco.getI() == 1){ //linha
+				char [] acoes = {'U','L','R','D'};//direita, a baixo e acima;
+				return acoes;
+			}
+			if(emBranco.getI() == 2){ //linha
+				char [] acoes = {'L','U','R'};//direita e acima;
+				return acoes;
+			}
+		}
+		//coluna
+		if(emBranco.getJ() == 2){
+			if(emBranco.getI() == 0){ //linha
+				char [] acoes = {'L','D'};//direita e a baixo;
+				return acoes;
+			}
+			if(emBranco.getI() == 1){ //linha
+				char [] acoes = {'U','L','D'};//direita, a baixo e acima;
+				return acoes;
+			}
+			if(emBranco.getI() == 2){ //linha
+				char [] acoes = {'L','U'};//direita e acima;
+				return acoes;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param state
+	 * @return Position where is the empty tile 
+	 */
+	public Position getTileEmpty(int [][] state){
+		int i = 0, j = 0;
+		while(i < state.length){
+			j = 0;
+			while(j < state.length && state[i][j] != 0){
+				j++;
+			}
+			if(j == state.length){
+				i++;
+			}
+			else{
+				break;
+			}
+		}
+		return new Position(i,j);
+	}
 }
