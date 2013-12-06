@@ -5,9 +5,11 @@ import model.*;
 
 import org.junit.Test;
 
-public class NamelessTest extends TestCase{
+import behaviour.ThinkBehaviour;
 
-	Nameless nl = new Nameless();
+public class ThinkBehaviourTest extends TestCase{
+
+	ThinkBehaviour nl = new ThinkBehaviour();
 
 	int [][] s1 = {{0,1,2},{3,4,5},{6,7,8}};
 	int [][] s2 = {{7,2,4},{5,0,6},{8,3,1}};
