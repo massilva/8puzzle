@@ -10,77 +10,96 @@ import behaviour.ThinkBehaviour;
 public class ThinkBehaviourTest extends TestCase{
 
 	ThinkBehaviour nl = new ThinkBehaviour();
-
+	//linha 1
 	int [][] s1 = {{0,1,2},{3,4,5},{6,7,8}};
-	int [][] s2 = {{7,2,4},{5,0,6},{8,3,1}};
-	int [][] s3 = {{4,1,3},{0,2,6},{7,5,8}};
-	int [][] s4 = {{3,0,5},{7,8,6},{1,2,4}};
-	int [][] s5 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
-	int [][] s6 = {{2,3,7},{5,4,8},{0,6,1}};
-	int [][] s7 = {{8,6,7},{2,5,4},{3,0,1}};
+	int [][] s2 = {{3,0,5},{7,8,6},{1,2,4}};
+	int [][] s3 = {{5,3,0},{4,1,6},{8,2,7}};
+	//linha 2
+	int [][] s4 = {{4,1,3},{0,2,6},{7,5,8}};
+	int [][] s5 = {{7,2,4},{5,0,6},{8,3,1}};
+	int [][] s6 = {{7,8,6},{3,5,0},{1,2,4}};
+	//linha 3
+	int [][] s7 = {{2,3,7},{5,4,8},{0,6,1}};
+	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}};
+	int [][] s9 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
 	
 	@Test
-	public void testGetPositionDefault() {
-		
+	public void testGetPositionDefault(){
 		Position position = new Position(0,0);
 		assertEquals(position, nl.getPositionDefault(0));
-		
 		position = new Position(0,1);
 		assertEquals(position, nl.getPositionDefault(1));
-		
 		position = new Position(0,2);
 		assertEquals(position, nl.getPositionDefault(2));
-		
 		position = new Position(1,0);
 		assertEquals(position, nl.getPositionDefault(3));
-		
 		position = new Position(1,1);
 		assertEquals(position, nl.getPositionDefault(4));
-		
 		position = new Position(1,2);
 		assertEquals(position, nl.getPositionDefault(5));
-		
 		position = new Position(2,0);
 		assertEquals(position, nl.getPositionDefault(6));
-		
 		position = new Position(2,1);
 		assertEquals(position, nl.getPositionDefault(7));
-		
 		position = new Position(2,2);
 		assertEquals(position, nl.getPositionDefault(8));
-		
 	}
 	
 	@Test
 	public void testManhattanDistance(){	
 		assertEquals(0, nl.manhattanDistance(s1));
-		assertEquals(18, nl.manhattanDistance(s2));
+		assertEquals(18, nl.manhattanDistance(s5));
 	}
 	
 	@Test
 	public void testIsObjetiveState(){
-		assertEquals(true, nl.isObjetiveState(s1));
+		assertEquals(true,  nl.isObjetiveState(s1));
 		assertEquals(false, nl.isObjetiveState(s2));
 		assertEquals(false, nl.isObjetiveState(s3));
+		assertEquals(false, nl.isObjetiveState(s4));
+		assertEquals(false, nl.isObjetiveState(s5));
+		assertEquals(false, nl.isObjetiveState(s6));
+		assertEquals(false, nl.isObjetiveState(s7));
+		assertEquals(false, nl.isObjetiveState(s8));
+		assertEquals(false, nl.isObjetiveState(s9));
 	}
 	
 	@Test
 	public void testGetTileEmpty(){
+		//linha 1
 		assertEquals(new Position(0,0),nl.getTileEmpty(s1));
-		assertEquals(new Position(1,1),nl.getTileEmpty(s2));
-		assertEquals(new Position(1,0),nl.getTileEmpty(s3));
+		assertEquals(new Position(0,1),nl.getTileEmpty(s2));
+		assertEquals(new Position(0,2),nl.getTileEmpty(s3));
+		//linha 2
+		assertEquals(new Position(1,0),nl.getTileEmpty(s4));
+		assertEquals(new Position(1,1),nl.getTileEmpty(s5));
+		assertEquals(new Position(1,2),nl.getTileEmpty(s6));
+		//linha 3
+		assertEquals(new Position(2,0),nl.getTileEmpty(s7));
+		assertEquals(new Position(2,1),nl.getTileEmpty(s8));
+		assertEquals(new Position(2,2),nl.getTileEmpty(s9));
 	}
 	
 	@Test
 	public void testAvailableAction(){
 		char [] a1 = {'R','D'};
 		availableActionAux(nl.availableAction(s1),a1);
-		
-		char [] a2 = {'R','D','U'};
-		availableActionAux(nl.availableAction(s3),a2);
-		
-		char [] a3 = {'U','L','R','D'};
-		availableActionAux(nl.availableAction(s2),a3);
+		char [] a2 = {'L','D','R'};
+		availableActionAux(nl.availableAction(s2),a2);
+		char [] a3 = {'L','D'};
+		availableActionAux(nl.availableAction(s3),a3);
+		char [] a4 = {'R','D','U'};
+		availableActionAux(nl.availableAction(s4),a4);
+		char [] a5 = {'U','L','R','D'};
+		availableActionAux(nl.availableAction(s5),a5);
+		char [] a6 = {'U','L','D'};
+		availableActionAux(nl.availableAction(s6),a6);
+		char [] a7 = {'R','U'};
+		availableActionAux(nl.availableAction(s7),a7);
+		char [] a8 = {'L','U','R'};
+		availableActionAux(nl.availableAction(s8),a8);
+		char [] a9 = {'L','U'};
+		availableActionAux(nl.availableAction(s9),a9);
 	}
 	
 	private void availableActionAux(char [] result, char [] acoes){

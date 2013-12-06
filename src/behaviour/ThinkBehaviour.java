@@ -93,45 +93,45 @@ public class ThinkBehaviour extends CyclicBehaviour {
 		//coluna
 		if(emBranco.getJ() == 0){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'R','D'};//direita e a baixo;
+				char [] acoes = {'R','D'};//direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'R','D','U'};//direita, a baixo e acima;
+				char [] acoes = {'R','D','U'};//direita, baixo e acima;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){//linha
-				char [] acoes = {'R','U'};//direita e acima;
+				char [] acoes = {'R','U'};//direita e cima;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 1){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'L','D','R'};//direita e a baixo;
+				char [] acoes = {'L','D','R'};//esquerda, baixo, direita;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'U','L','R','D'};//direita, a baixo e acima;
+				char [] acoes = {'U','L','R','D'};//cima, esquerda, direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'L','U','R'};//direita e acima;
+				char [] acoes = {'L','U','R'};//esquerda, cima, direita;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 2){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'L','D'};//direita e a baixo;
+				char [] acoes = {'L','D'};//esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'U','L','D'};//direita, a baixo e acima;
+				char [] acoes = {'U','L','D'};//cima, esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'L','U'};//direita e acima;
+				char [] acoes = {'L','U'};//esquerda e cima;
 				return acoes;
 			}
 		}
