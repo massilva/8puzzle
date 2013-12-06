@@ -1,28 +1,33 @@
 package behaviour;
 
+import java.util.ArrayList;
+
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import main.Puzzle;
+import model.Node;
 import model.Position;
+import java.util.List;
 
 public class ThinkBehaviour extends CyclicBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private int [][] entrada;
-	
+	private final int COST = 1; //Custo Constant
+	private Node nEntrada; // Nó de entrada
 	public ThinkBehaviour(){
 		
 	}
 	
-	public ThinkBehaviour(Agent agent, int [][] entrada){
+	public ThinkBehaviour(Agent agent, Node nEntrada){
 		this.myAgent = (Puzzle)agent;
-		this.entrada = entrada;
+		this.nEntrada = nEntrada;
 	}
 
 	@Override
 	public void action(){
 		//Verificando se a entrada passada é um estado objetivo
-		if(!this.isObjetiveState(this.entrada)){
+		if(!this.isObjetiveState(this.nEntrada.getState())){
+			char [] acoes = this.getAvailableAction(this.nEntrada.getState());
 			System.out.println("Pensando..."+myAgent.getAID().getName());
 		}
 	}
@@ -88,7 +93,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	 * @param state 
 	 * @return the actions available for @param state
 	 */
-	public char [] availableAction(int [][] state){
+	public char [] getAvailableAction(int [][] state){
 		Position emBranco = getTileEmpty(state);
 		//coluna
 		if(emBranco.getJ() == 0){
@@ -158,6 +163,58 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			}
 		}
 		return new Position(i,j);
+	}
+	
+	/**
+	 * 
+	 * @param action
+	 * @param nState
+	 * @return Node resultant of to run action in nState. 
+	 */
+	public Node result(char action, Node nState){
+		Node node = new Node(), nEstado = nState;
+		node.setParent(nEstado);
+		node.setCost(nEstado.getCost()+COST);
+		node.setParentAction(action);
+		
+		Position emBranco = getTileEmpty(nEstado.getState());
+		Position auxPosition = emBranco;
+		switch (action){
+		case 'L':
+			auxPosition = new Position(emBranco.getI(),emBranco.getJ()-1);
+			break;
+		case 'R':
+			auxPosition = new Position(emBranco.getI(),emBranco.getJ()+1);
+			break;
+		case 'U':
+			auxPosition = new Position(emBranco.getI()-1,emBranco.getJ());
+			break;
+		case 'D':
+			auxPosition = new Position(emBranco.getI()+1,emBranco.getJ());
+			break;
+		}
+		
+		int [][] estado = nEstado.getState();
+		int aux = estado[auxPosition.getI()][auxPosition.getJ()]; //get value in position where will be moved the empty tile. 
+		estado[emBranco.getI()][emBranco.getJ()] = aux;
+		estado[auxPosition.getI()][auxPosition.getJ()] = 0;
+		
+		node.setState(estado);
+		return node;
+	}
+	
+	/**
+	 * 
+	 * @param actions
+	 * @param nState
+	 * @return a list of results when run the method Result with all the actions available 
+	 */
+	public List<Node> getAllResult(char [] actions, Node nState){
+		List<Node> resultados = new ArrayList<Node>();
+		for (char acao : actions){
+			resultados.add(result(acao, nState));
+		}
+		return resultados;
 	}
 	
 }

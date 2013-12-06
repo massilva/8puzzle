@@ -5,6 +5,7 @@ import jade.core.behaviours.SimpleBehaviour;
 
 import java.util.Iterator;
 
+import model.Node;
 import behaviour.ThinkBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -27,20 +28,21 @@ public class Puzzle extends Agent{
 		}
 		System.out.println(lineSeparator);
 		
+		Node nEntrada = new Node(this.entrada, null,'N', 0);
 		// Adicionando novo behaviour ao agente
-		this.addBehaviour(new StartBehaviour(this,this.entrada));
+		this.addBehaviour(new StartBehaviour(this,nEntrada));
 	}
 
 	public class StartBehaviour extends SimpleBehaviour
 	{
 		private boolean end;
-		private int [][] entrada;
+		private Node nEntrada;
 		
 		// Construtor para setar a variavel myAgent (representação do agente no behaviour)
-		public StartBehaviour(Agent a, int [][] entrada)
+		public StartBehaviour(Agent a, Node nEntrada)
 		{
 			this.myAgent = (Puzzle)a;
-			this.entrada = entrada;
+			this.nEntrada = nEntrada;
 			end = false;
 		}
 	
@@ -63,7 +65,7 @@ public class Puzzle extends Agent{
 		public int onEnd()
 		{
 			// Adição do primeiro behaviour de processamento do agente
-			addBehaviour(new ThinkBehaviour(this.myAgent,this.entrada));
+			addBehaviour(new ThinkBehaviour(this.myAgent,this.nEntrada));
 			return 0;
 		}
 		

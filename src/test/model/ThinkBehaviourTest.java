@@ -83,25 +83,40 @@ public class ThinkBehaviourTest extends TestCase{
 	@Test
 	public void testAvailableAction(){
 		char [] a1 = {'R','D'};
-		availableActionAux(nl.availableAction(s1),a1);
+		availableActionAux(nl.getAvailableAction(s1),a1);
 		char [] a2 = {'L','D','R'};
-		availableActionAux(nl.availableAction(s2),a2);
+		availableActionAux(nl.getAvailableAction(s2),a2);
 		char [] a3 = {'L','D'};
-		availableActionAux(nl.availableAction(s3),a3);
+		availableActionAux(nl.getAvailableAction(s3),a3);
 		char [] a4 = {'R','D','U'};
-		availableActionAux(nl.availableAction(s4),a4);
+		availableActionAux(nl.getAvailableAction(s4),a4);
 		char [] a5 = {'U','L','R','D'};
-		availableActionAux(nl.availableAction(s5),a5);
+		availableActionAux(nl.getAvailableAction(s5),a5);
 		char [] a6 = {'U','L','D'};
-		availableActionAux(nl.availableAction(s6),a6);
+		availableActionAux(nl.getAvailableAction(s6),a6);
 		char [] a7 = {'R','U'};
-		availableActionAux(nl.availableAction(s7),a7);
+		availableActionAux(nl.getAvailableAction(s7),a7);
 		char [] a8 = {'L','U','R'};
-		availableActionAux(nl.availableAction(s8),a8);
+		availableActionAux(nl.getAvailableAction(s8),a8);
 		char [] a9 = {'L','U'};
-		availableActionAux(nl.availableAction(s9),a9);
+		availableActionAux(nl.getAvailableAction(s9),a9);
 	}
 	
+	@Test
+	public void testResult(){
+		Node p1 = new Node(s1, null, 'N', 0);
+		int [][] e1 = {{1,0,2},{3,4,5},{6,7,8}};
+		Node n1 = new Node(e1, p1, 'R', 1);
+		Node t1 = nl.result('R',p1);
+		assertEquals(p1, t1.getParent());
+		assertEquals(n1,t1);
+	}
+	
+	/**
+	 * Helper function
+	 * @param result
+	 * @param acoes
+	 */
 	private void availableActionAux(char [] result, char [] acoes){
 		assertEquals(result.length,acoes.length);
 		int i= 0;
