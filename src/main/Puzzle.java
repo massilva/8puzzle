@@ -14,6 +14,7 @@ import jade.lang.acl.MessageTemplate;
 public class Puzzle extends Agent{
 	private String lineSeparator = "\n------------------------------------------------";
 	private int [][] entrada = {{4,1,3},{0,2,6},{7,5,8}};
+	private PuzzleGui gui = null;	
 		
 	protected void setup(){
 		System.out.println( " Hello World . Eu sou um agente !" ) ;
@@ -28,9 +29,32 @@ public class Puzzle extends Agent{
 		}
 		System.out.println(lineSeparator);
 		
+		gui = new PuzzleGui(this);
+		gui.showGui();		
+	}
+	
+	public void start()
+	{
 		Node nEntrada = new Node(this.entrada, null,'N', 0);
+		
 		// Adicionando novo behaviour ao agente
 		this.addBehaviour(new StartBehaviour(this,nEntrada));
+	}
+	
+	public int[][] getEntrada()
+	{
+		return this.entrada;
+	}
+	
+	public void setEntrada(int[][] e)
+	{
+		this.entrada = e;
+	}
+	
+	public void showEntrada()
+	{
+		for (int i = 0; i < 9; i++)
+			System.out.println(entrada[i/3][i%3]);
 	}
 
 	public class StartBehaviour extends SimpleBehaviour
@@ -67,8 +91,6 @@ public class Puzzle extends Agent{
 			// Adição do primeiro behaviour de processamento do agente
 			addBehaviour(new ThinkBehaviour(this.myAgent,this.nEntrada));
 			return 0;
-		}
-		
+		}		
 	}
-
 }
