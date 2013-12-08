@@ -76,7 +76,13 @@ public class Node {
 	@Override
 	public boolean equals(Object o){
 		Node node = (Node)o;
-		boolean resultado = (node.getCost() == this.cost) && (node.getParent() == this.parent) && (node.getParentAction() == this.parentAction);
+		boolean resultado = (node.getCost() == this.cost);
+		if(node.getParent() == null){
+			resultado = resultado && node.getParent() == this.parent;
+		}else{
+			resultado = resultado && node.getParent().equals(this.parent);
+		}
+		resultado =  resultado && (node.getParentAction() == this.parentAction);
 		int [][] estado = node.getState();
 		int i = 0, j = 0;
 		if(resultado){
@@ -93,6 +99,6 @@ public class Node {
 				}
 			}
 		}
-		return (resultado && (i == estado.length));
+		return (resultado) && (i == estado.length) && (j == 0);
 	}
 }

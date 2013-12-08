@@ -7,6 +7,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import main.Puzzle;
 import model.Node;
 import model.Position;
+
 import java.util.List;
 
 public class ThinkBehaviour extends CyclicBehaviour {
@@ -172,7 +173,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	 * @return Node resultant of to run action in nState. 
 	 */
 	public Node result(char action, Node nState){
-		Node node = new Node(), nEstado = nState;
+		Node node = new Node(), nEstado = new Node(nState.getState(),nState.getParent(),nState.getParentAction(),nState.getCost());
 		node.setParent(nEstado);
 		node.setCost(nEstado.getCost()+COST);
 		node.setParentAction(action);
@@ -194,7 +195,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			break;
 		}
 		
-		int [][] estado = nEstado.getState();
+		int [][] estado = copy(nEstado.getState());
 		int aux = estado[auxPosition.getI()][auxPosition.getJ()]; //get value in position where will be moved the empty tile. 
 		estado[emBranco.getI()][emBranco.getJ()] = aux;
 		estado[auxPosition.getI()][auxPosition.getJ()] = 0;
@@ -215,6 +216,21 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			resultados.add(result(acao, nState));
 		}
 		return resultados;
+	}
+	
+	/**
+	 * 
+	 * @param matriz
+	 * @return a copy of matriz
+	 */
+	public int[][] copy(int[][]matriz){
+		int [][] cp = new int[3][3];
+		for (int i = 0; i < matriz.length; i++){
+			for (int j = 0; j < matriz.length; j++){
+				cp[i][j] = matriz[i][j];
+			}
+		}
+		return cp;
 	}
 	
 }
