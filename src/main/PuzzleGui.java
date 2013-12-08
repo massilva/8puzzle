@@ -9,8 +9,6 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Canvas;
-
 
 @SuppressWarnings("serial")
 public class PuzzleGui extends JFrame {
@@ -26,6 +24,15 @@ public class PuzzleGui extends JFrame {
 	private JTextField input7;
 	private JTextField input8;
 	private Puzzle myAgent;
+	private JTextField output1;
+	private JTextField output2;
+	private JTextField output0;
+	private JTextField output3;
+	private JTextField output4;
+	private JTextField output5;
+	private JTextField output6;
+	private JTextField output7;
+	private JTextField output8;
 	
 	/**
 	 * Launch the application.
@@ -54,11 +61,7 @@ public class PuzzleGui extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
-		contentPane.setLayout(null);		
-		
-		Canvas canvas = new Canvas();
-		canvas.setBounds(160, 10, 150, 150);
-		contentPane.add(canvas);
+		contentPane.setLayout(null);
 		
 		input0 = new JTextField();
 		input0.setBounds(0, 10, 50, 50);
@@ -128,6 +131,51 @@ public class PuzzleGui extends JFrame {
 		});
 		StartGame.setBounds(110, 168, 89, 23);
 		contentPane.add(StartGame);			
+		
+		output1 = new JTextField();
+		output1.setColumns(10);
+		output1.setBounds(214, 10, 50, 50);
+		contentPane.add(output1);
+		
+		output2 = new JTextField();
+		output2.setColumns(10);
+		output2.setBounds(264, 10, 50, 50);
+		contentPane.add(output2);
+		
+		output0 = new JTextField();
+		output0.setColumns(10);
+		output0.setBounds(164, 10, 50, 50);
+		contentPane.add(output0);
+		
+		output3 = new JTextField();
+		output3.setColumns(10);
+		output3.setBounds(164, 60, 50, 50);
+		contentPane.add(output3);
+		
+		output4 = new JTextField();
+		output4.setColumns(10);
+		output4.setBounds(214, 60, 50, 50);
+		contentPane.add(output4);
+		
+		output5 = new JTextField();
+		output5.setColumns(10);
+		output5.setBounds(264, 60, 50, 50);
+		contentPane.add(output5);
+		
+		output6 = new JTextField();
+		output6.setColumns(10);
+		output6.setBounds(164, 110, 50, 50);
+		contentPane.add(output6);
+		
+		output7 = new JTextField();
+		output7.setColumns(10);
+		output7.setBounds(214, 110, 50, 50);
+		contentPane.add(output7);
+		
+		output8 = new JTextField();
+		output8.setColumns(10);
+		output8.setBounds(264, 110, 50, 50);
+		contentPane.add(output8);
 	}
 	
 	public void showGui() {
@@ -138,6 +186,21 @@ public class PuzzleGui extends JFrame {
 		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
 		this.setSize(330, 230);		
 		super.setVisible(true);
+	}
+	
+	public void setOutput(int[][] o)
+	{
+		output0.setText(Integer.toString(o[0][0]));
+		output1.setText(Integer.toString(o[0][1]));
+		output2.setText(Integer.toString(o[0][2]));
+		
+		output3.setText(Integer.toString(o[1][0]));
+		output4.setText(Integer.toString(o[1][1]));
+		output5.setText(Integer.toString(o[1][2]));
+		
+		output6.setText(Integer.toString(o[2][0]));
+		output7.setText(Integer.toString(o[2][1]));
+		output8.setText(Integer.toString(o[2][2]));		
 	}
 	
 	public int getInput8() {
