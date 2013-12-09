@@ -85,23 +85,23 @@ public class ThinkBehaviourTest extends TestCase{
 	
 	@Test
 	public void testAvailableAction(){
-		char [] a1 = {'R','D'};
+		char [] a1 = {'L','U'};
 		availableActionAux(nl.getAvailableAction(s1),a1);
-		char [] a2 = {'L','D','R'};
+		char [] a2 = {'R','U','L'};
 		availableActionAux(nl.getAvailableAction(s2),a2);
-		char [] a3 = {'L','D'};
+		char [] a3 = {'R','U'};
 		availableActionAux(nl.getAvailableAction(s3),a3);
-		char [] a4 = {'R','D','U'};
+		char [] a4 = {'L','U','D'};
 		availableActionAux(nl.getAvailableAction(s4),a4);
-		char [] a5 = {'U','L','R','D'};
+		char [] a5 = {'D','R','L','U'};
 		availableActionAux(nl.getAvailableAction(s5),a5);
-		char [] a6 = {'U','L','D'};
+		char [] a6 = {'D','R','U'};
 		availableActionAux(nl.getAvailableAction(s6),a6);
-		char [] a7 = {'R','U'};
+		char [] a7 = {'L','D'};
 		availableActionAux(nl.getAvailableAction(s7),a7);
-		char [] a8 = {'L','U','R'};
+		char [] a8 = {'R','D','L'};
 		availableActionAux(nl.getAvailableAction(s8),a8);
-		char [] a9 = {'L','U'};
+		char [] a9 = {'R','D'};
 		availableActionAux(nl.getAvailableAction(s9),a9);
 	}
 	
@@ -109,8 +109,8 @@ public class ThinkBehaviourTest extends TestCase{
 	public void testResult(){
 		Node p1 = new Node(s1, null, 'N', 0);
 		int [][] e1 = {{1,0,2},{3,4,5},{6,7,8}};
-		Node n1 = new Node(e1, p1, 'R', 1);
-		Node t1 = nl.result('R',p1);
+		Node n1 = new Node(e1, p1, 'L', 1);
+		Node t1 = nl.result('L',p1);
 		assertEquals(p1, t1.getParent());
 		assertEquals(n1,t1);
 	}
@@ -122,11 +122,11 @@ public class ThinkBehaviourTest extends TestCase{
 		List<Node> nodes = nl.getAllResult(actions, nState);
 		List<Node> lista = new ArrayList<Node>();
 		int [][] e1 = {{0,3,5},{7,8,6},{1,2,4}};
-		lista.add(new Node(e1,nState,'L',1));
+		lista.add(new Node(e1,nState,'R',1));
 		int [][] e2 = {{3,8,5},{7,0,6},{1,2,4}};
-		lista.add(new Node(e2,nState,'D',1));
+		lista.add(new Node(e2,nState,'U',1));
 		int [][] e3 = {{3,5,0},{7,8,6},{1,2,4}};
-		lista.add(new Node(e3,nState,'R',1));
+		lista.add(new Node(e3,nState,'L',1));
 		assertEquals(lista,nodes);
 	}
 	

@@ -134,45 +134,45 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		//coluna
 		if(emBranco.getJ() == 0){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'R','D'};//direita, baixo;
+				char [] acoes = {'L','U'};//direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'R','D','U'};//direita, baixo e acima;
+				char [] acoes = {'L','U','D'};//direita, baixo e acima;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){//linha
-				char [] acoes = {'R','U'};//direita e cima;
+				char [] acoes = {'L','D'};//direita e cima;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 1){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'L','D','R'};//esquerda, baixo, direita;
+				char [] acoes = {'R','U','L'};//esquerda, baixo, direita;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'U','L','R','D'};//cima, esquerda, direita, baixo;
+				char [] acoes = {'D','R','L','U'};//cima, esquerda, direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'L','U','R'};//esquerda, cima, direita;
+				char [] acoes = {'R','D','L'};//esquerda, cima, direita;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 2){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'L','D'};//esquerda, baixo;
+				char [] acoes = {'R','U'};//esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'U','L','D'};//cima, esquerda, baixo;
+				char [] acoes = {'D','R','U'};//cima, esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'L','U'};//esquerda e cima;
+				char [] acoes = {'R','D'};//esquerda e cima;
 				return acoes;
 			}
 		}
@@ -217,20 +217,20 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		Position auxPosition = emBranco;
 		switch (action){
 		case 'L':
-			auxPosition = new Position(emBranco.getI(),emBranco.getJ()-1);
-			break;
-		case 'R':
 			auxPosition = new Position(emBranco.getI(),emBranco.getJ()+1);
 			break;
+		case 'R':
+			auxPosition = new Position(emBranco.getI(),emBranco.getJ()-1);
+			break;
 		case 'U':
-			auxPosition = new Position(emBranco.getI()-1,emBranco.getJ());
+			auxPosition = new Position(emBranco.getI()+1,emBranco.getJ());
 			break;
 		case 'D':
-			auxPosition = new Position(emBranco.getI()+1,emBranco.getJ());
+			auxPosition = new Position(emBranco.getI()-1,emBranco.getJ());
 			break;
 		}
 		
-		if(auxPosition.getI() >= 3 || auxPosition.getJ() >= 3){
+		if(auxPosition.getI() >= 3 || auxPosition.getJ() >= 3 || auxPosition.getI() < 0 || auxPosition.getJ() < 0){
 			node = null;
 		}else{
 			int [][] estado = copy(nEstado.getState());
