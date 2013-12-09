@@ -1,5 +1,8 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 import model.*;
 
@@ -110,6 +113,33 @@ public class ThinkBehaviourTest extends TestCase{
 		Node t1 = nl.result('R',p1);
 		assertEquals(p1, t1.getParent());
 		assertEquals(n1,t1);
+	}
+	
+	@Test
+	public void testQuickSort(){
+		List<Node> lista = new ArrayList<Node>();
+		lista.add(new Node(s3, null, 'N', 2));
+		lista.add(new Node(s2, null, 'N', 21));
+		lista.add(new Node(s1, null, 'N', 0));
+		nl.quick_sort(lista, 0,lista.size()-1);
+		List<Node> ordenado = new ArrayList<Node>();
+		ordenado.add(new Node(s1, null, 'N', 0));
+		ordenado.add(new Node(s3, null, 'N', 2));
+		ordenado.add(new Node(s2, null, 'N', 21));
+		assertEquals(ordenado, lista);
+	}
+	
+	@Test
+	public void testAddInOrder(){
+		List<Node> esperado = new ArrayList<Node>();
+		List<Node> lista = new ArrayList<Node>();
+		esperado.add(new Node(s1, null, 'N', 0)); //md = 0 
+		esperado.add(new Node(s3, null, 'N', 2)); //md = 16 
+		esperado.add(new Node(s2, null, 'N', 21));//md = 17
+		nl.addInOrderByManhattanDistance(lista, new Node(s3, null, 'N', 2));
+		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 21));
+		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
+		assertEquals(esperado, lista);
 	}
 	
 	/**

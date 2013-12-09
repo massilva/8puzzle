@@ -15,17 +15,22 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	private static final long serialVersionUID = 1L;
 	private final int COST = 1; //Custo Constant
 	private Node nEntrada; // Nó de entrada
+	private List<Node>fronteira, explorado;
+	
 	public ThinkBehaviour(){
 		
 	}
 	
-	public ThinkBehaviour(Agent agent, Node nEntrada){
+	public ThinkBehaviour(Agent agent, Node nEntrada, List<Node>fronteira, List<Node>explorado){
 		this.myAgent = (Puzzle)agent;
 		this.nEntrada = nEntrada;
+		this.fronteira = fronteira;
+		this.explorado = explorado;
 	}
 
 	@Override
 	public void action(){
+		addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 		//Verificando se a entrada passada é um estado objetivo
 		if(!this.isObjetiveState(this.nEntrada.getState())){
 			char [] acoes = this.getAvailableAction(this.nEntrada.getState());
@@ -233,4 +238,54 @@ public class ThinkBehaviour extends CyclicBehaviour {
 		return cp;
 	}
 	
+	/**
+	 * 
+	 * @param fronteira
+	 * @param node
+	 */
+	public void addInOrderByManhattanDistance(List<Node>fronteira, Node node){
+		fronteira.add(node);
+		quick_sort(fronteira, 0, fronteira.size()-1);
+	}
+	
+	/**
+	 * 
+	 * @param lista
+	 * @param ini
+	 * @param fim
+	 * @return a list order by cost
+	 */
+	public void quick_sort(List<Node>lista,int ini, int fim) {
+	     int meio;	
+	     if (ini < fim){
+             meio = partition(lista, ini, fim);
+             quick_sort(lista, ini, meio);
+             quick_sort(lista, meio + 1, fim);
+         }
+	 }
+	
+	/**
+	 * Helper Function
+	 * @param lista
+	 * @param ini
+	 * @param fim
+	 * @return
+	 */
+	 public int partition(List<Node>lista, int ini, int fim) {
+         Node pivo;
+         int topo, i;
+         pivo = lista.get(ini);
+         topo = ini;
+
+         for (i = ini + 1; i <= fim; i++) {
+             if(manhattanDistance(lista.get(i).getState()) < manhattanDistance(pivo.getState())) {
+                 lista.set(topo,lista.get(i));
+                 lista.set(i,lista.get(topo + 1));
+                 topo++; 
+             }
+         }
+         lista.set(topo,pivo);
+         return topo;
+	 }
+ 
 }

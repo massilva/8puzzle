@@ -3,7 +3,9 @@ package main;
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import model.Node;
 import behaviour.ThinkBehaviour;
@@ -15,20 +17,11 @@ public class Puzzle extends Agent{
 	private String lineSeparator = "\n------------------------------------------------";
 	private int [][] entrada = {{4,1,3},{0,2,6},{7,5,8}};
 	private PuzzleGui gui = null;	
-		
+	private List <Node> fronteira, explorado;
+	
 	protected void setup(){
-		System.out.println( " Hello World . Eu sou um agente !" ) ;
-		System.out.println( " Todas as minhas informacoes : \n" + getAID());
-		System.out.println( "Meu nome local eh "+ getAID().getLocalName());
-		System.out.println( "Meu nome global (GUID)  eh  "+ getAID().getName());
-		System.out.println(lineSeparator);
-		System.out.println( "Meus endereços são: ") ;
-		Iterator<?> it = getAID().getAllAddresses();
-		while(it.hasNext()){
-			System.out.println("- "+it.next());
-		}
-		System.out.println(lineSeparator);
-		
+		this.fronteira = new ArrayList<Node>();
+		this.explorado = new ArrayList<Node>();
 		gui = new PuzzleGui(this);
 		gui.showGui();		
 	}
@@ -38,7 +31,7 @@ public class Puzzle extends Agent{
 		Node nEntrada = new Node(this.entrada, null,'N', 0);
 		
 		// Adicionando novo behaviour ao agente
-		this.addBehaviour(new StartBehaviour(this,nEntrada));
+		this.addBehaviour(new StartBehaviour(this,nEntrada,this.fronteira,this.explorado));
 	}
 	
 	public int[][] getEntrada()
@@ -61,12 +54,15 @@ public class Puzzle extends Agent{
 	{
 		private boolean end;
 		private Node nEntrada;
+		private List<Node>fronteira, explorado;
 		
 		// Construtor para setar a variavel myAgent (representação do agente no behaviour)
-		public StartBehaviour(Agent a, Node nEntrada)
+		public StartBehaviour(Agent a, Node nEntrada, List<Node>fronteira, List<Node>explorado)
 		{
 			this.myAgent = (Puzzle)a;
 			this.nEntrada = nEntrada;
+			this.fronteira = fronteira;
+			this.explorado = explorado;
 			end = false;
 		}
 	
@@ -89,8 +85,9 @@ public class Puzzle extends Agent{
 		public int onEnd()
 		{
 			// Adição do primeiro behaviour de processamento do agente
-			addBehaviour(new ThinkBehaviour(this.myAgent,this.nEntrada));
+			addBehaviour(new ThinkBehaviour(this.myAgent,this.nEntrada,this.fronteira,this.explorado));
 			return 0;
-		}		
+		}
+		
 	}
 }
