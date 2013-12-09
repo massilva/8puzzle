@@ -64,8 +64,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			}
 		}
 		else{
-			System.out.println("Solucao:");
-			System.out.println(reconstructPath(this.nEntrada));
+			System.out.println("#SUCESS");
 		}
 	}
 	
