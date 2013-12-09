@@ -1,6 +1,7 @@
 package behaviour;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -30,11 +31,32 @@ public class ThinkBehaviour extends CyclicBehaviour {
 
 	@Override
 	public void action(){
-		addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 		//Verificando se a entrada passada é um estado objetivo
 		if(!this.isObjetiveState(this.nEntrada.getState())){
-			char [] acoes = this.getAvailableAction(this.nEntrada.getState());
-			System.out.println("Pensando..."+myAgent.getAID().getName());
+			addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
+			this.explorado = new ArrayList<Node>();
+			if(!this.fronteira.isEmpty()){
+				Node atual = nEntrada; 
+				while(!this.fronteira.isEmpty()){
+					char [] acoes = this.getAvailableAction(atual.getState());
+					List<Node> possibilidade = this.getAllResult(acoes,atual);
+					this.fronteira.remove(atual);
+					for (Node node : possibilidade){
+						addInOrderByManhattanDistance(this.fronteira,node);
+					}
+					this.explorado.add(atual);
+					if(!this.fronteira.isEmpty()){
+						atual = this.fronteira.get(0);
+					}
+				}
+			}
+			else{
+				System.out.println("FAILURE");
+			}
+		}
+		else{
+			System.out.println("Solucao:");
+			System.out.println(this.nEntrada);
 		}
 	}
 	
@@ -175,7 +197,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	 * 
 	 * @param action
 	 * @param nState
-	 * @return Node resultant of to run action in nState. 
+	 * @return Node resultant of to run action in nState if not exist in closed list 
 	 */
 	public Node result(char action, Node nState){
 		Node node = new Node(), nEstado = new Node(nState.getState(),nState.getParent(),nState.getParentAction(),nState.getCost());
@@ -200,13 +222,16 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			break;
 		}
 		
-		int [][] estado = copy(nEstado.getState());
-		int aux = estado[auxPosition.getI()][auxPosition.getJ()]; //get value in position where will be moved the empty tile. 
-		estado[emBranco.getI()][emBranco.getJ()] = aux;
-		estado[auxPosition.getI()][auxPosition.getJ()] = 0;
-		
-		node.setState(estado);
-		return node;
+		if(auxPosition.getI() >= 3 || auxPosition.getJ() >= 3){
+			node = null;
+		}else{
+			int [][] estado = copy(nEstado.getState());
+			int aux = estado[auxPosition.getI()][auxPosition.getJ()]; //get value in position where will be moved the empty tile. 
+			estado[emBranco.getI()][emBranco.getJ()] = aux;
+			estado[auxPosition.getI()][auxPosition.getJ()] = 0;
+			node.setState(estado);
+		}
+		return inArray(this.explorado,node) ? null : node;
 	}
 	
 	/**
@@ -218,7 +243,10 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	public List<Node> getAllResult(char [] actions, Node nState){
 		List<Node> resultados = new ArrayList<Node>();
 		for (char acao : actions){
-			resultados.add(result(acao, nState));
+			Node node = result(acao, nState);
+			if(node != null){
+				resultados.add(node);
+			}
 		}
 		return resultados;
 	}
@@ -263,8 +291,8 @@ public class ThinkBehaviour extends CyclicBehaviour {
              quick_sort(lista, meio + 1, fim);
          }
 	 }
-	
-	/**
+	 
+	 /**
 	 * Helper Function
 	 * @param lista
 	 * @param ini
@@ -287,5 +315,18 @@ public class ThinkBehaviour extends CyclicBehaviour {
          lista.set(topo,pivo);
          return topo;
 	 }
- 
+	 
+	 public boolean inArray(List<Node>lista, Node node){
+		 if(lista != null){
+			 Iterator<Node> it = lista.iterator();
+			 Node no = (Node) it.next();
+			 while (it.hasNext() && !no.equals(node)){
+				no = (Node) it.next();
+			 }
+			 return no.equals(node);
+		 }else{
+			 return false;
+		 }
+	 }
+	 
 }

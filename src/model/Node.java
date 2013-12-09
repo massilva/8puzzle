@@ -68,7 +68,6 @@ public class Node {
 		for (int [] obj : state){
 			st += Arrays.toString(obj);
 		}
-		
 		return "Node [state=" + st + ", parent=" + parent
 				+ ", parentAction=" + parentAction + ", cost=" + cost + "]";
 	} 
@@ -76,6 +75,9 @@ public class Node {
 	@Override
 	public boolean equals(Object o){
 		Node node = (Node)o;
+		if(o == null){
+			return false;
+		}
 		boolean resultado = (node.getCost() == this.cost);
 		if(node.getParent() == null){
 			resultado = resultado && node.getParent() == this.parent;

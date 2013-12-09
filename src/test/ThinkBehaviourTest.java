@@ -116,6 +116,21 @@ public class ThinkBehaviourTest extends TestCase{
 	}
 	
 	@Test
+	public void testGetAllResult(){
+		Node nState = new Node(s2, null, 'N', 0);
+		char [] actions = nl.getAvailableAction(nState.getState());
+		List<Node> nodes = nl.getAllResult(actions, nState);
+		List<Node> lista = new ArrayList<Node>();
+		int [][] e1 = {{0,3,5},{7,8,6},{1,2,4}};
+		lista.add(new Node(e1,nState,'L',1));
+		int [][] e2 = {{3,8,5},{7,0,6},{1,2,4}};
+		lista.add(new Node(e2,nState,'D',1));
+		int [][] e3 = {{3,5,0},{7,8,6},{1,2,4}};
+		lista.add(new Node(e3,nState,'R',1));
+		assertEquals(lista,nodes);
+	}
+	
+	@Test
 	public void testQuickSort(){
 		List<Node> lista = new ArrayList<Node>();
 		lista.add(new Node(s3, null, 'N', 2));
@@ -140,6 +155,27 @@ public class ThinkBehaviourTest extends TestCase{
 		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 21));
 		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
 		assertEquals(esperado, lista);
+	}
+	
+	@Test
+	public void testInArray(){
+		List<Node> lista = new ArrayList<Node>();
+		lista.add(new Node(s1, null, 'N', 0));
+		lista.add(new Node(s2, null, 'N', 0));
+		lista.add(new Node(s3, null, 'N', 0));
+		lista.add(new Node(s4, null, 'N', 0));
+		lista.add(new Node(s4, null, 'N', 0));
+		lista.add(new Node(s5, null, 'N', 0));
+		lista.add(new Node(s6, null, 'N', 0));
+		assertEquals(true,nl.inArray(lista,new Node(s1, null, 'N', 0)));
+		assertEquals(true,nl.inArray(lista,new Node(s2, null, 'N', 0)));
+		assertEquals(true,nl.inArray(lista,new Node(s3, null, 'N', 0)));
+		assertEquals(true,nl.inArray(lista,new Node(s4, null, 'N', 0)));
+		assertEquals(true,nl.inArray(lista,new Node(s5, null, 'N', 0)));
+		assertEquals(true,nl.inArray(lista,new Node(s6, null, 'N', 0)));
+		assertEquals(false,nl.inArray(lista,new Node(s7, null, 'N', 0)));
+		assertEquals(false,nl.inArray(lista,new Node(s8, null, 'N', 0)));
+		assertEquals(false,nl.inArray(lista,new Node(s9, null, 'N', 0)));
 	}
 	
 	/**
