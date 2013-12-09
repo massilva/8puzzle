@@ -358,7 +358,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		 }
 
 		 if(lastNode.getParentAction() != 'N')
-			 string = 	"Action: "+lastNode.getParentAction()+"\nState: "+lastNode.stateToString()+"\n"+string;
+			 string = 	"Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
 		 else{
 			 string = "StateI: "+lastNode.stateToString()+"\n"+string;
 		 }

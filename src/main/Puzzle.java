@@ -15,14 +15,14 @@ public class Puzzle extends Agent{
 	private List <Node> fronteira, explorado;
 	
 	protected void setup(){
-		this.fronteira = new ArrayList<Node>();
-		this.explorado = new ArrayList<Node>();
 		gui = new PuzzleGui(this);
 		gui.showGui();
 	}
 	
 	public void start()
 	{
+		this.fronteira = new ArrayList<Node>();
+		this.explorado = new ArrayList<Node>();
 		Node nEntrada = new Node(this.entrada, null,'N', 0);
 		this.addBehaviour(new ThinkBehaviour(this,nEntrada,this.fronteira,this.explorado));
 	}
