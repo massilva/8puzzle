@@ -158,7 +158,7 @@ public class ThinkBehaviourTest extends TestCase{
 	}
 	
 	@Test
-	public void testinList(){
+	public void testInList(){
 		List<Node> lista = new ArrayList<Node>();
 		lista.add(new Node(s1, null, 'N', 0));
 		lista.add(new Node(s2, null, 'N', 0));
@@ -176,6 +176,20 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(false,nl.inList(lista,new Node(s7, null, 'N', 0)));
 		assertEquals(false,nl.inList(lista,new Node(s8, null, 'N', 0)));
 		assertEquals(false,nl.inList(lista,new Node(s9, null, 'N', 0)));
+	}
+	
+	@Test
+	public void testReconstructPath(){
+		Node n1 = new Node(s1, null, 'N', 0);
+		Node n2 = new Node(s3, n1, 'L', 1);
+		Node n3 = new Node(s4, n2, 'R', 0);
+		Node n4 = new Node(s4, n3, 'R', 0);
+		Node n5 = new Node(s4, n3, 'D', 0);
+		assertEquals("", nl.reconstructPath(n1));
+		assertEquals("Action: L\n", nl.reconstructPath(n2));
+		assertEquals("Action: L\nAction: R\n", nl.reconstructPath(n3));
+		assertEquals("Action: L\nAction: R\nAction: R\n", nl.reconstructPath(n4));
+		assertEquals("Action: L\nAction: R\nAction: D\n", nl.reconstructPath(n5));
 	}
 	
 	/**

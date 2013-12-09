@@ -53,19 +53,19 @@ public class ThinkBehaviour extends CyclicBehaviour {
 					}
 				}
 				if(this.isObjetiveState(atual.getState())){
-					System.out.println("Solucao:");
-					System.out.println(atual);
+					System.out.println("#SUCESS");
+					System.out.println(reconstructPath(atual));
 				}else{
-					System.out.println("FAILURE");
+					System.out.println("#FAILURE");
 				}
 			}
 			else{
-				System.out.println("FAILURE");
+				System.out.println("#FAILURE");
 			}
 		}
 		else{
 			System.out.println("Solucao:");
-			System.out.println(this.nEntrada);
+			System.out.println(reconstructPath(this.nEntrada));
 		}
 	}
 	
@@ -329,7 +329,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	  * 
 	  * @param lista
 	  * @param node
-	  * @return TRUE if exists node in list Node 
+	  * @return TRUE if exists node in list Node FALSE else. 
 	  */
 	 public boolean inList(List<Node>lista, Node node){
 		 if(lista != null){
@@ -344,4 +344,26 @@ public class ThinkBehaviour extends CyclicBehaviour {
 		 }
 	 }
 	 
+	 /**
+	  * 
+	  * @param lastNode
+	  * @return path made to reach the node lastNode
+	  */
+	 public String reconstructPath(Node lastNode,String str){
+		 String string = str;
+		 if(lastNode.getParent() == null){
+			 return string;
+		 }
+		 string = "Action: "+lastNode.getParentAction()+"\n"+string;
+		 return reconstructPath(lastNode.getParent(),string);
+	 }
+	 
+	 /**
+	  * 
+	  * @param lastNode
+	  * @return path made to reach the node lastNode
+	  */
+	 public String reconstructPath(Node lastNode){
+		 return reconstructPath(lastNode, "");
+	 }
 }
