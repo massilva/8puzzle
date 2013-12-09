@@ -48,6 +48,15 @@ public class ThinkBehaviour extends CyclicBehaviour {
 					if(!this.fronteira.isEmpty()){
 						atual = this.fronteira.get(0);
 					}
+					if(this.isObjetiveState(atual.getState())){
+						break;
+					}
+				}
+				if(this.isObjetiveState(atual.getState())){
+					System.out.println("Solucao:");
+					System.out.println(atual);
+				}else{
+					System.out.println("FAILURE");
 				}
 			}
 			else{
