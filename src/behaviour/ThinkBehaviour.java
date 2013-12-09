@@ -117,8 +117,9 @@ public class ThinkBehaviour extends OneShotBehaviour{
 				break;
 			}
 			i++;
+			j=0;
 		}
-		if(i == objetiveState.length && j == objetiveState.length){
+		if(i == objetiveState.length){
 			return true;
 		}
 		return false;

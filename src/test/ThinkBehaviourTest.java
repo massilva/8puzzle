@@ -65,6 +65,8 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(false, nl.isObjetiveState(s7));
 		assertEquals(false, nl.isObjetiveState(s8));
 		assertEquals(false, nl.isObjetiveState(s9));
+		int [][] s10 = {{0,1,2},{3,4,5},{8,7,6}};
+		assertEquals(false, nl.isObjetiveState(s10));
 	}
 	
 	@Test
