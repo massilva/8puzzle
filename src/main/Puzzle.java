@@ -21,14 +21,12 @@ public class Puzzle extends Agent{
 		this.fronteira = new ArrayList<Node>();
 		this.explorado = new ArrayList<Node>();
 		gui = new PuzzleGui(this);
-		gui.showGui();		
+		gui.showGui();
 	}
 	
 	public void start()
 	{
 		Node nEntrada = new Node(this.entrada, null,'N', 0);
-		
-		// Adicionando novo behaviour ao agente
 		this.addBehaviour(new StartBehaviour(this,nEntrada,this.fronteira,this.explorado));
 	}
 	

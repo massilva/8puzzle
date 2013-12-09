@@ -332,8 +332,11 @@ public class ThinkBehaviour extends CyclicBehaviour {
 	  */
 	 public boolean inList(List<Node>lista, Node node){
 		 if(lista != null){
+			 if(lista.isEmpty())
+				return false;
+			
 			 Iterator<Node> it = lista.iterator();
-			 Node no = (Node) it.next();
+			 Node no = new Node();
 			 while (it.hasNext() && !no.equals(node)){
 				no = (Node) it.next();
 			 }
