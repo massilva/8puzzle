@@ -113,20 +113,23 @@ public class PuzzleGui extends JFrame {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				int[][] entrada = new int[3][3];
-				
-				entrada[0][0] = getInput0();
-				entrada[0][1] = getInput1();
-				entrada[0][2] = getInput2();
-				entrada[1][0] = getInput3();
-				entrada[1][1] = getInput4();
-				entrada[1][2] = getInput5();
-				entrada[2][0] = getInput6();
-				entrada[2][1] = getInput7();
-				entrada[2][2] = getInput8();
-				
-				myAgent.setEntrada(entrada);
-				myAgent.showEntrada();
-				myAgent.start();
+				try{
+					entrada[0][0] = getInput0();
+					entrada[0][1] = getInput1();
+					entrada[0][2] = getInput2();
+					entrada[1][0] = getInput3();
+					entrada[1][1] = getInput4();
+					entrada[1][2] = getInput5();
+					entrada[2][0] = getInput6();
+					entrada[2][1] = getInput7();
+					entrada[2][2] = getInput8();
+					
+					myAgent.setEntrada(entrada);
+					myAgent.showEntrada();
+					myAgent.start();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		});
 		StartGame.setBounds(110, 168, 89, 23);

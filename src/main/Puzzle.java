@@ -4,7 +4,6 @@ import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import model.Node;
@@ -14,8 +13,7 @@ import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
 public class Puzzle extends Agent{
-	private String lineSeparator = "\n------------------------------------------------";
-	private int [][] entrada = {{4,1,3},{0,2,6},{7,5,8}};
+	private int [][] entrada;
 	private PuzzleGui gui = null;	
 	private List <Node> fronteira, explorado;
 	
