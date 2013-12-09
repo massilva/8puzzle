@@ -183,13 +183,9 @@ public class ThinkBehaviourTest extends TestCase{
 		Node n1 = new Node(s1, null, 'N', 0);
 		Node n2 = new Node(s3, n1, 'L', 1);
 		Node n3 = new Node(s4, n2, 'R', 0);
-		Node n4 = new Node(s4, n3, 'R', 0);
-		Node n5 = new Node(s4, n3, 'D', 0);
-		assertEquals("", nl.reconstructPath(n1));
-		assertEquals("Action: L\n", nl.reconstructPath(n2));
-		assertEquals("Action: L\nAction: R\n", nl.reconstructPath(n3));
-		assertEquals("Action: L\nAction: R\nAction: R\n", nl.reconstructPath(n4));
-		assertEquals("Action: L\nAction: R\nAction: D\n", nl.reconstructPath(n5));
+		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\n", nl.reconstructPath(n1));
+		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: L\nState: [5, 3, 0][4, 1, 6][8, 2, 7]\n", nl.reconstructPath(n2));
+		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: L\nState: [5, 3, 0][4, 1, 6][8, 2, 7]\nAction: R\nState: [4, 1, 3][0, 2, 6][7, 5, 8]\n", nl.reconstructPath(n3));
 	}
 	
 	/**

@@ -353,10 +353,15 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	  */
 	 public String reconstructPath(Node lastNode,String str){
 		 String string = str;
-		 if(lastNode.getParent() == null){
+		 if(lastNode == null){
 			 return string;
 		 }
-		 string = "Action: "+lastNode.getParentAction()+"\n"+string;
+
+		 if(lastNode.getParentAction() != 'N')
+			 string = 	"Action: "+lastNode.getParentAction()+"\nState: "+lastNode.stateToString()+"\n"+string;
+		 else{
+			 string = "StateI: "+lastNode.stateToString()+"\n"+string;
+		 }
 		 return reconstructPath(lastNode.getParent(),string);
 	 }
 	 

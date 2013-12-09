@@ -62,12 +62,18 @@ public class Node {
 		this.cost = cost;
 	}
 
-	@Override
-	public String toString(){
+	public String stateToString(){
 		String st = "";
 		for (int [] obj : state){
 			st += Arrays.toString(obj);
 		}
+		return st;
+	}
+	
+	@Override
+	public String toString(){
+		String st = "";
+		st += stateToString();
 		return "Node [state=" + st + ", parent=" + parent
 				+ ", parentAction=" + parentAction + ", cost=" + cost + "]";
 	} 
