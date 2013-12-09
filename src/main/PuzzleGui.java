@@ -125,7 +125,6 @@ public class PuzzleGui extends JFrame {
 					entrada[2][2] = getInput8();
 					
 					myAgent.setEntrada(entrada);
-					myAgent.showEntrada();
 					myAgent.start();
 				}catch(Exception e){
 					e.printStackTrace();

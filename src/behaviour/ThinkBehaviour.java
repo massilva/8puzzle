@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import main.Puzzle;
 import model.Node;
 import model.Position;
 
 import java.util.List;
 
-public class ThinkBehaviour extends CyclicBehaviour {
+public class ThinkBehaviour extends OneShotBehaviour{
 
 	private static final long serialVersionUID = 1L;
 	private final int COST = 1; //Custo Constant

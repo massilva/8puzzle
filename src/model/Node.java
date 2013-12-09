@@ -78,6 +78,8 @@ public class Node {
 		if(o == null){
 			return false;
 		}
+		boolean resultado = true;
+		/*
 		boolean resultado = (node.getCost() == this.cost);
 		if(node.getParent() == null){
 			resultado = resultado && node.getParent() == this.parent;
@@ -85,9 +87,10 @@ public class Node {
 			resultado = resultado && node.getParent().equals(this.parent);
 		}
 		resultado =  resultado && (node.getParentAction() == this.parentAction);
+		*/
 		int [][] estado = node.getState();
 		int i = 0, j = 0;
-		if(resultado){
+		//if(resultado){
 			while((i < estado.length) && (estado[i][j] == state[i][j])){
 				while((j < estado.length) && (estado[i][j] == state[i][j])){
 					j++;
@@ -100,7 +103,7 @@ public class Node {
 					break;
 				}
 			}
-		}
+		//}
 		return (resultado) && (i == estado.length) && (j == 0);
 	}
 }
