@@ -240,7 +240,7 @@ public class ThinkBehaviour extends CyclicBehaviour {
 			estado[auxPosition.getI()][auxPosition.getJ()] = 0;
 			node.setState(estado);
 		}
-		return inArray(this.explorado,node) ? null : node;
+		return inList(this.explorado,node) ? null : node;
 	}
 	
 	/**
@@ -325,7 +325,13 @@ public class ThinkBehaviour extends CyclicBehaviour {
          return topo;
 	 }
 	 
-	 public boolean inArray(List<Node>lista, Node node){
+	 /**
+	  * 
+	  * @param lista
+	  * @param node
+	  * @return TRUE if exists node in list Node 
+	  */
+	 public boolean inList(List<Node>lista, Node node){
 		 if(lista != null){
 			 Iterator<Node> it = lista.iterator();
 			 Node no = (Node) it.next();

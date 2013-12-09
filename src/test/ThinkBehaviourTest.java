@@ -158,7 +158,7 @@ public class ThinkBehaviourTest extends TestCase{
 	}
 	
 	@Test
-	public void testInArray(){
+	public void testinList(){
 		List<Node> lista = new ArrayList<Node>();
 		lista.add(new Node(s1, null, 'N', 0));
 		lista.add(new Node(s2, null, 'N', 0));
@@ -167,15 +167,15 @@ public class ThinkBehaviourTest extends TestCase{
 		lista.add(new Node(s4, null, 'N', 0));
 		lista.add(new Node(s5, null, 'N', 0));
 		lista.add(new Node(s6, null, 'N', 0));
-		assertEquals(true,nl.inArray(lista,new Node(s1, null, 'N', 0)));
-		assertEquals(true,nl.inArray(lista,new Node(s2, null, 'N', 0)));
-		assertEquals(true,nl.inArray(lista,new Node(s3, null, 'N', 0)));
-		assertEquals(true,nl.inArray(lista,new Node(s4, null, 'N', 0)));
-		assertEquals(true,nl.inArray(lista,new Node(s5, null, 'N', 0)));
-		assertEquals(true,nl.inArray(lista,new Node(s6, null, 'N', 0)));
-		assertEquals(false,nl.inArray(lista,new Node(s7, null, 'N', 0)));
-		assertEquals(false,nl.inArray(lista,new Node(s8, null, 'N', 0)));
-		assertEquals(false,nl.inArray(lista,new Node(s9, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s1, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s2, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s3, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s4, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s5, null, 'N', 0)));
+		assertEquals(true,nl.inList(lista,new Node(s6, null, 'N', 0)));
+		assertEquals(false,nl.inList(lista,new Node(s7, null, 'N', 0)));
+		assertEquals(false,nl.inList(lista,new Node(s8, null, 'N', 0)));
+		assertEquals(false,nl.inList(lista,new Node(s9, null, 'N', 0)));
 	}
 	
 	/**
