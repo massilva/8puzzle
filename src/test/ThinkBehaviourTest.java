@@ -1,10 +1,11 @@
 package test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import junit.framework.TestCase;
-import model.*;
+import model.Node;
+import model.Position;
 
 import org.junit.Test;
 
@@ -25,6 +26,9 @@ public class ThinkBehaviourTest extends TestCase{
 	int [][] s7 = {{2,3,7},{5,4,8},{0,6,1}};
 	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}};
 	int [][] s9 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
+	
+	List <Node> fronteira = new ArrayList<Node>();
+	List <Node> explorado = new ArrayList<Node>();
 	
 	@Test
 	public void testGetPositionDefault(){
@@ -87,23 +91,23 @@ public class ThinkBehaviourTest extends TestCase{
 	
 	@Test
 	public void testAvailableAction(){
-		char [] a1 = {'L','U'};
+		char [] a1 = {'R','D'};
 		availableActionAux(nl.getAvailableAction(s1),a1);
-		char [] a2 = {'R','U','L'};
+		char [] a2 = {'L','D','R'};
 		availableActionAux(nl.getAvailableAction(s2),a2);
-		char [] a3 = {'R','U'};
+		char [] a3 = {'L','D'};
 		availableActionAux(nl.getAvailableAction(s3),a3);
-		char [] a4 = {'L','U','D'};
+		char [] a4 = {'R','D','U'};
 		availableActionAux(nl.getAvailableAction(s4),a4);
-		char [] a5 = {'D','R','L','U'};
+		char [] a5 = {'U','L','R','D'};
 		availableActionAux(nl.getAvailableAction(s5),a5);
-		char [] a6 = {'D','R','U'};
+		char [] a6 = {'U','L','D'};
 		availableActionAux(nl.getAvailableAction(s6),a6);
-		char [] a7 = {'L','D'};
+		char [] a7 = {'R','U'};
 		availableActionAux(nl.getAvailableAction(s7),a7);
-		char [] a8 = {'R','D','L'};
+		char [] a8 = {'L','U','R'};
 		availableActionAux(nl.getAvailableAction(s8),a8);
-		char [] a9 = {'R','D'};
+		char [] a9 = {'L','U'};
 		availableActionAux(nl.getAvailableAction(s9),a9);
 	}
 	
@@ -111,8 +115,8 @@ public class ThinkBehaviourTest extends TestCase{
 	public void testResult(){
 		Node p1 = new Node(s1, null, 'N', 0);
 		int [][] e1 = {{1,0,2},{3,4,5},{6,7,8}};
-		Node n1 = new Node(e1, p1, 'L', 1);
-		Node t1 = nl.result('L',p1);
+		Node n1 = new Node(e1, p1, 'R', 1);
+		Node t1 = nl.result(this.fronteira,this.explorado,'R',p1);
 		assertEquals(p1, t1.getParent());
 		assertEquals(n1,t1);
 	}
@@ -121,14 +125,14 @@ public class ThinkBehaviourTest extends TestCase{
 	public void testGetAllResult(){
 		Node nState = new Node(s2, null, 'N', 0);
 		char [] actions = nl.getAvailableAction(nState.getState());
-		List<Node> nodes = nl.getAllResult(actions, nState);
+		List<Node> nodes = nl.getAllResult(this.fronteira,this.explorado,actions, nState);
 		List<Node> lista = new ArrayList<Node>();
 		int [][] e1 = {{0,3,5},{7,8,6},{1,2,4}};
-		lista.add(new Node(e1,nState,'R',1));
+		lista.add(new Node(e1,nState,'L',1));
 		int [][] e2 = {{3,8,5},{7,0,6},{1,2,4}};
-		lista.add(new Node(e2,nState,'U',1));
+		lista.add(new Node(e2,nState,'D',1));
 		int [][] e3 = {{3,5,0},{7,8,6},{1,2,4}};
-		lista.add(new Node(e3,nState,'L',1));
+		lista.add(new Node(e3,nState,'R',1));
 		assertEquals(lista,nodes);
 	}
 	
@@ -150,11 +154,11 @@ public class ThinkBehaviourTest extends TestCase{
 	public void testAddInOrder(){
 		List<Node> esperado = new ArrayList<Node>();
 		List<Node> lista = new ArrayList<Node>();
-		esperado.add(new Node(s1, null, 'N', 0)); //md = 0 
-		esperado.add(new Node(s3, null, 'N', 2)); //md = 16 
-		esperado.add(new Node(s2, null, 'N', 21));//md = 17
-		nl.addInOrderByManhattanDistance(lista, new Node(s3, null, 'N', 2));
-		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 21));
+		esperado.add(new Node(s1, null, 'N', 0));  //md = 0 
+		esperado.add(new Node(s3, null, 'N', 20)); //md = 16 
+		esperado.add(new Node(s2, null, 'N', 2));  //md = 17
+		nl.addInOrderByManhattanDistance(lista,new Node(s3, null, 'N', 20));
+		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 2));
 		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
 		assertEquals(esperado, lista);
 	}
@@ -183,11 +187,19 @@ public class ThinkBehaviourTest extends TestCase{
 	@Test
 	public void testReconstructPath(){
 		Node n1 = new Node(s1, null, 'N', 0);
-		Node n2 = new Node(s3, n1, 'L', 1);
-		Node n3 = new Node(s4, n2, 'R', 0);
+		Node n2 = new Node(s3, n1, 'R', 1);
+		Node n3 = new Node(s4, n2, 'L', 0);
 		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\n", nl.reconstructPath(n1));
-		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: L ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\n", nl.reconstructPath(n2));
-		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: L ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\nAction: R ==> State: [4, 1, 3][0, 2, 6][7, 5, 8]\n", nl.reconstructPath(n3));
+		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: R ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\n", nl.reconstructPath(n2));
+		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: R ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\nAction: L ==> State: [4, 1, 3][0, 2, 6][7, 5, 8]\n", nl.reconstructPath(n3));
+	}
+	
+	@Test
+	public void testListContains(){
+		List<Node> list = new ArrayList<Node>();
+		list.add(new Node(s1, null, 'N', 0));
+		assertEquals(true, list.contains(new Node(s1, null, 'N', 0)));
+		assertEquals(false, list.contains(new Node(s2, null, 'N', 0)));
 	}
 	
 	/**

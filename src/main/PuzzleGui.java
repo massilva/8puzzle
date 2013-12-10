@@ -35,25 +35,9 @@ public class PuzzleGui extends JFrame {
 	private JTextField output8;
 	
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					PuzzleGui frame = new PuzzleGui();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
 	 * Create the frame.
 	 */
-	public PuzzleGui(Puzzle a) {
+	public PuzzleGui(Puzzle a){
 		
 		myAgent = a;
 		
@@ -180,7 +164,7 @@ public class PuzzleGui extends JFrame {
 		contentPane.add(output8);
 	}
 	
-	public void showGui() {
+	public void showGui(){
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int centerX = (int)screenSize.getWidth() / 2;

@@ -1,6 +1,8 @@
 package behaviour;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import jade.core.Agent;
@@ -17,6 +19,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	private final int COST = 1; //Custo Constant
 	private Node nEntrada; // Nó de entrada
 	private List<Node>fronteira, explorado;
+	private String lS = "----------------------------------------------------";
 	
 	public ThinkBehaviour(){
 		
@@ -35,13 +38,15 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		if(!this.isObjetiveState(this.nEntrada.getState())){
 			addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 			this.explorado = new ArrayList<Node>();
-			if(!this.fronteira.isEmpty()){
-				Node atual = nEntrada; 
+			int soma = manhattanDistance(nEntrada.getState());
+			System.out.println("#"+soma);
+			if(!this.fronteira.isEmpty() && (soma%2==0)){
+				Node atual = nEntrada;
 				while(!this.fronteira.isEmpty()){
 					char [] acoes = this.getAvailableAction(atual.getState());
-					List<Node> possibilidade = this.getAllResult(acoes,atual);
+					List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
 					this.fronteira.remove(atual);
-					for (Node node : possibilidade){
+					for(Node node : possibilidade){
 						addInOrderByManhattanDistance(this.fronteira,node);
 					}
 					this.explorado.add(atual);
@@ -54,17 +59,22 @@ public class ThinkBehaviour extends OneShotBehaviour{
 				}
 				if(this.isObjetiveState(atual.getState())){
 					System.out.println("#SUCESS");
+					System.out.println(lS);
 					System.out.println(reconstructPath(atual));
 				}else{
-					System.out.println("#FAILURE");
+					System.out.println("#IMPOSSIBLE");
 				}
 			}
 			else{
-				System.out.println("#FAILURE");
+				System.out.println("#IMPOSSIBLE");
+				if(soma%2!=0)
+					System.out.println("Manhatthan Distance odd: "+soma);
 			}
 		}
 		else{
 			System.out.println("#SUCESS");
+			System.out.println(lS);
+			System.out.println(reconstructPath(nEntrada));
 		}
 	}
 	
@@ -135,45 +145,45 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		//coluna
 		if(emBranco.getJ() == 0){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'L','U'};//direita, baixo;
+				char [] acoes = {'R','D'};//direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'L','U','D'};//direita, baixo e acima;
+				char [] acoes = {'R','D','U'};//direita, baixo e acima;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){//linha
-				char [] acoes = {'L','D'};//direita e cima;
+				char [] acoes = {'R','U'};//direita e cima;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 1){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'R','U','L'};//esquerda, baixo, direita;
+				char [] acoes = {'L','D','R'};//esquerda, baixo, direita;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'D','R','L','U'};//cima, esquerda, direita, baixo;
+				char [] acoes = {'U','L','R','D'};//cima, esquerda, direita, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'R','D','L'};//esquerda, cima, direita;
+				char [] acoes = {'L','U','R'};//esquerda, cima, direita;
 				return acoes;
 			}
 		}
 		//coluna
 		if(emBranco.getJ() == 2){
 			if(emBranco.getI() == 0){ //linha
-				char [] acoes = {'R','U'};//esquerda, baixo;
+				char [] acoes = {'L','D'};//esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 1){ //linha
-				char [] acoes = {'D','R','U'};//cima, esquerda, baixo;
+				char [] acoes = {'U','L','D'};//cima, esquerda, baixo;
 				return acoes;
 			}
 			if(emBranco.getI() == 2){ //linha
-				char [] acoes = {'R','D'};//esquerda e cima;
+				char [] acoes = {'L','U'};//esquerda e cima;
 				return acoes;
 			}
 		}
@@ -208,7 +218,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 * @param nState
 	 * @return Node resultant of to run action in nState if not exist in closed list 
 	 */
-	public Node result(char action, Node nState){
+	public Node result(List<Node>fronteira,List<Node>explorado, char action, Node nState){
 		Node node = new Node(), nEstado = new Node(nState.getState(),nState.getParent(),nState.getParentAction(),nState.getCost());
 		node.setParent(nEstado);
 		node.setCost(nEstado.getCost()+COST);
@@ -217,16 +227,16 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		Position emBranco = getTileEmpty(nEstado.getState());
 		Position auxPosition = emBranco;
 		switch (action){
-		case 'L':
+		case 'R':
 			auxPosition = new Position(emBranco.getI(),emBranco.getJ()+1);
 			break;
-		case 'R':
+		case 'L':
 			auxPosition = new Position(emBranco.getI(),emBranco.getJ()-1);
 			break;
-		case 'U':
+		case 'D':
 			auxPosition = new Position(emBranco.getI()+1,emBranco.getJ());
 			break;
-		case 'D':
+		case 'U':
 			auxPosition = new Position(emBranco.getI()-1,emBranco.getJ());
 			break;
 		}
@@ -240,7 +250,11 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			estado[auxPosition.getI()][auxPosition.getJ()] = 0;
 			node.setState(estado);
 		}
-		return inList(this.explorado,node) ? null : node;
+		
+		if(node == null)
+			return null;
+		
+		return (explorado.contains(node)||fronteira.contains(node)) ? null : node;
 	}
 	
 	/**
@@ -249,10 +263,10 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 * @param nState
 	 * @return a list of results when run the method Result with all the actions available 
 	 */
-	public List<Node> getAllResult(char [] actions, Node nState){
+	public List<Node> getAllResult(List<Node>fronteira, List<Node>explorado, char [] actions, Node nState){
 		List<Node> resultados = new ArrayList<Node>();
 		for (char acao : actions){
-			Node node = result(acao, nState);
+			Node node = result(fronteira,explorado,acao, nState);
 			if(node != null){
 				resultados.add(node);
 			}
@@ -282,7 +296,12 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 */
 	public void addInOrderByManhattanDistance(List<Node>fronteira, Node node){
 		fronteira.add(node);
-		quick_sort(fronteira, 0, fronteira.size()-1);
+		Collections.sort(fronteira, new Comparator<Node>(){ 
+			@Override 
+			public int compare(Node a, Node b){ 
+				return manhattanDistance(a.getState()) - manhattanDistance(b.getState()); 
+			}
+		});
 	}
 	
 	/**
@@ -315,10 +334,10 @@ public class ThinkBehaviour extends OneShotBehaviour{
          topo = ini;
 
          for (i = ini + 1; i <= fim; i++) {
-             if(manhattanDistance(lista.get(i).getState()) < manhattanDistance(pivo.getState())) {
+             if(manhattanDistance(lista.get(i).getState()) <= manhattanDistance(pivo.getState())) {
                  lista.set(topo,lista.get(i));
-                 lista.set(i,lista.get(topo + 1));
-                 topo++; 
+                 topo++;
+                 lista.set(i,lista.get(topo));
              }
          }
          lista.set(topo,pivo);
