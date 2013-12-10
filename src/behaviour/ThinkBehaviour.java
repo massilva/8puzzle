@@ -38,7 +38,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		if(!this.isObjetiveState(this.nEntrada.getState())){
 			addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 			this.explorado = new ArrayList<Node>();
-			int soma = manhattanDistance(nEntrada.getState());
+			int soma = manhattanDistance(this.nEntrada);
 			System.out.println("#"+soma);
 			if(!this.fronteira.isEmpty() && (soma%2==0)){
 				Node atual = nEntrada;
@@ -97,8 +97,9 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 * @param state
 	 * @return
 	 */
-	public int manhattanDistance(int [][] state){
+	public int manhattanDistance(Node node){
 		int some = 0;
+		int [][] state = node.getState();
 		//Assumes the order of number into state, instead of ascending order
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 3; j++){
@@ -108,6 +109,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 				}
 			}
 		}
+		some += node.getCost();
 		return some;
 	}
 	
@@ -299,7 +301,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		Collections.sort(fronteira, new Comparator<Node>(){ 
 			@Override 
 			public int compare(Node a, Node b){ 
-				return manhattanDistance(a.getState()) - manhattanDistance(b.getState()); 
+				return manhattanDistance(a) - manhattanDistance(b); 
 			}
 		});
 	}
@@ -334,7 +336,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
          topo = ini;
 
          for (i = ini + 1; i <= fim; i++) {
-             if(manhattanDistance(lista.get(i).getState()) <= manhattanDistance(pivo.getState())) {
+             if(manhattanDistance(lista.get(i)) <= manhattanDistance(pivo)) {
                  lista.set(topo,lista.get(i));
                  topo++;
                  lista.set(i,lista.get(topo));

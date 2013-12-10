@@ -54,8 +54,8 @@ public class ThinkBehaviourTest extends TestCase{
 	
 	@Test
 	public void testManhattanDistance(){	
-		assertEquals(0, nl.manhattanDistance(s1));
-		assertEquals(18, nl.manhattanDistance(s5));
+		assertEquals(0, nl.manhattanDistance(new Node(s1, null, 'N', 0)));
+		assertEquals(28, nl.manhattanDistance(new Node(s5, null, 'N', 10)));
 	}
 	
 	@Test
@@ -154,9 +154,9 @@ public class ThinkBehaviourTest extends TestCase{
 	public void testAddInOrder(){
 		List<Node> esperado = new ArrayList<Node>();
 		List<Node> lista = new ArrayList<Node>();
-		esperado.add(new Node(s1, null, 'N', 0));  //md = 0 
-		esperado.add(new Node(s3, null, 'N', 20)); //md = 16 
-		esperado.add(new Node(s2, null, 'N', 2));  //md = 17
+		esperado.add(new Node(s1, null, 'N', 0));  //md = 0 + 0 = 0
+		esperado.add(new Node(s2, null, 'N', 2));  //md = 17 + 2 = 19
+		esperado.add(new Node(s3, null, 'N', 20)); //md = 16 + 20 = 36
 		nl.addInOrderByManhattanDistance(lista,new Node(s3, null, 'N', 20));
 		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 2));
 		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
