@@ -137,20 +137,6 @@ public class ThinkBehaviourTest extends TestCase{
 	}
 	
 	@Test
-	public void testQuickSort(){
-		List<Node> lista = new ArrayList<Node>();
-		lista.add(new Node(s3, null, 'N', 2));
-		lista.add(new Node(s2, null, 'N', 21));
-		lista.add(new Node(s1, null, 'N', 0));
-		nl.quick_sort(lista, 0,lista.size()-1);
-		List<Node> ordenado = new ArrayList<Node>();
-		ordenado.add(new Node(s1, null, 'N', 0));
-		ordenado.add(new Node(s3, null, 'N', 2));
-		ordenado.add(new Node(s2, null, 'N', 21));
-		assertEquals(ordenado, lista);
-	}
-	
-	@Test
 	public void testAddInOrder(){
 		List<Node> esperado = new ArrayList<Node>();
 		List<Node> lista = new ArrayList<Node>();
@@ -161,37 +147,6 @@ public class ThinkBehaviourTest extends TestCase{
 		nl.addInOrderByManhattanDistance(lista,new Node(s2, null, 'N', 2));
 		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
 		assertEquals(esperado, lista);
-	}
-	
-	@Test
-	public void testInList(){
-		List<Node> lista = new ArrayList<Node>();
-		lista.add(new Node(s1, null, 'N', 0));
-		lista.add(new Node(s2, null, 'N', 0));
-		lista.add(new Node(s3, null, 'N', 0));
-		lista.add(new Node(s4, null, 'N', 0));
-		lista.add(new Node(s4, null, 'N', 0));
-		lista.add(new Node(s5, null, 'N', 0));
-		lista.add(new Node(s6, null, 'N', 0));
-		assertEquals(true,nl.inList(lista,new Node(s1, null, 'N', 0)));
-		assertEquals(true,nl.inList(lista,new Node(s2, null, 'N', 0)));
-		assertEquals(true,nl.inList(lista,new Node(s3, null, 'N', 0)));
-		assertEquals(true,nl.inList(lista,new Node(s4, null, 'N', 0)));
-		assertEquals(true,nl.inList(lista,new Node(s5, null, 'N', 0)));
-		assertEquals(true,nl.inList(lista,new Node(s6, null, 'N', 0)));
-		assertEquals(false,nl.inList(lista,new Node(s7, null, 'N', 0)));
-		assertEquals(false,nl.inList(lista,new Node(s8, null, 'N', 0)));
-		assertEquals(false,nl.inList(lista,new Node(s9, null, 'N', 0)));
-	}
-	
-	@Test
-	public void testReconstructPath(){
-		Node n1 = new Node(s1, null, 'N', 0);
-		Node n2 = new Node(s3, n1, 'R', 1);
-		Node n3 = new Node(s4, n2, 'L', 0);
-		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\n", nl.reconstructPath(n1));
-		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: R ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\n", nl.reconstructPath(n2));
-		assertEquals("StateI: [0, 1, 2][3, 4, 5][6, 7, 8]\nAction: R ==> State: [5, 3, 0][4, 1, 6][8, 2, 7]\nAction: L ==> State: [4, 1, 3][0, 2, 6][7, 5, 8]\n", nl.reconstructPath(n3));
 	}
 	
 	@Test
@@ -241,6 +196,27 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(4, nl.manhattanDistance(f3)); // h = 3, c = 1
 		assertEquals(4, nl.manhattanDistance(f4)); // h = 3, c = 1
 		
+	}
+	
+	@Test
+	public void testNumberInvertions(){
+		int [][] s = {{1,0,3},{2,4,5},{6,7,8}};
+		assertEquals(1, nl.getNumberInversions(s));
+		
+		int [][] s1 = {{7,0,2},{8,5,3},{6,4,1}};
+		assertEquals(19, nl.getNumberInversions(s1));
+		
+		int [][] s2 = {{2,0,7},{8,5,3},{6,4,1}};
+		assertEquals(18, nl.getNumberInversions(s2));
+		
+		int [][] s3 = {{3,1,2},{0,4,5},{6,7,8}};
+		assertEquals(2, nl.getNumberInversions(s3));
+		
+		int [][] s4 = {{0,1,2},{3,4,5},{6,7,8}};
+		assertEquals(0, nl.getNumberInversions(s4));
+		
+		int [][] s5 = {{1,0,2},{3,4,5},{6,7,8}};
+		assertEquals(0, nl.getNumberInversions(s5));		
 	}
 	
 	/**
