@@ -34,47 +34,76 @@ public class ThinkBehaviour extends OneShotBehaviour{
 
 	@Override
 	public void action(){
-		//Verificando se a entrada passada é um estado objetivo
-		if(!this.isObjetiveState(this.nEntrada.getState())){
-			addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
-			this.explorado = new ArrayList<Node>();
-			int soma = manhattanDistance(this.nEntrada);
-			if(!this.fronteira.isEmpty() && (soma%2==0)){
-				Node atual = nEntrada;
-				while(!this.fronteira.isEmpty()){
-					char [] acoes = this.getAvailableAction(atual.getState());
-					List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
-					this.fronteira.remove(atual);
-					for(Node node : possibilidade){
-						addInOrderByManhattanDistance(this.fronteira,node);
+		
+		int count = getNumberInversions(nEntrada.getState());
+		
+		if (count%2 == 0)
+		{
+			//Verificando se a entrada passada é um estado objetivo
+			if(!this.isObjetiveState(this.nEntrada.getState())){
+				
+				addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
+				this.explorado = new ArrayList<Node>();
+				
+				if(!this.fronteira.isEmpty()){
+					Node atual = nEntrada;
+					
+					while(!this.fronteira.isEmpty()){
+						char [] acoes = this.getAvailableAction(atual.getState());
+						List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
+						this.fronteira.remove(atual);
+						
+						for(Node node : possibilidade){
+							addInOrderByManhattanDistance(this.fronteira,node);
+						}
+						
+						this.explorado.add(atual);
+						
+						if(!this.fronteira.isEmpty()){
+							atual = this.fronteira.get(0);
+						}
+						
+						if(this.isObjetiveState(atual.getState())){
+							break;
+						}
 					}
-					this.explorado.add(atual);
-					if(!this.fronteira.isEmpty()){
-						atual = this.fronteira.get(0);
-					}
+					
 					if(this.isObjetiveState(atual.getState())){
-						break;
+						reconstructSuccess(atual);
+					}else{
+						System.out.println("#UNSOLVABLE");
+						System.out.println(lS);
+						System.out.println(nEntrada.stateToString());
 					}
-				}
-				if(this.isObjetiveState(atual.getState())){
-					reconstructSuccess(atual);
-				}else{
-					System.out.println("#UNSOLVABLE");
-					System.out.println(lS);
-					System.out.println(nEntrada.stateToString());
-				}
+				}				
 			}
 			else{
-				System.out.println("#UNSOLVABLE");
-				if(soma%2!=0){
-					System.out.println(lS);
-					System.out.println("Manhatthan Distance odd: "+soma);
-				}
+				reconstructSuccess(nEntrada);
 			}
 		}
 		else{
-			reconstructSuccess(nEntrada);
+			System.out.println("#UNSOLVABLE");
+			if(count%2!=0){
+				System.out.println(lS);
+				System.out.println("Number of inversions is odd: " + count);
+			}
 		}
+	}
+	
+	public int getNumberInversions(int [][] entrada)
+	{
+		int count = 0;
+		
+//		Contando o numero de inversoes na entrada fornecida		
+		for (int i = 0; i < 9; i++)
+			for (int j = i; j < 9; j++)
+				if ((entrada[i/3][i%3] != 0) &&
+					(entrada[j/3][j%3] != 0) && 
+					(entrada[i/3][i%3] > entrada[j/3][j%3]))
+				{
+		            count++;
+				}
+		return count;
 	}
 	
 	/**
@@ -304,68 +333,6 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			}
 		});
 	}
-	
-	/**
-	 * 
-	 * @param lista
-	 * @param ini
-	 * @param fim
-	 * @return a list order by cost
-	 */
-	public void quick_sort(List<Node>lista,int ini, int fim) {
-	     int meio;	
-	     if (ini < fim){
-             meio = partition(lista, ini, fim);
-             quick_sort(lista, ini, meio);
-             quick_sort(lista, meio + 1, fim);
-         }
-	 }
-	 
-	 /**
-	 * Helper Function
-	 * @param lista
-	 * @param ini
-	 * @param fim
-	 * @return
-	 */
-	 public int partition(List<Node>lista, int ini, int fim) {
-         Node pivo;
-         int topo, i;
-         pivo = lista.get(ini);
-         topo = ini;
-
-         for (i = ini + 1; i <= fim; i++) {
-             if(manhattanDistance(lista.get(i)) <= manhattanDistance(pivo)) {
-                 lista.set(topo,lista.get(i));
-                 topo++;
-                 lista.set(i,lista.get(topo));
-             }
-         }
-         lista.set(topo,pivo);
-         return topo;
-	 }
-	 
-	 /**
-	  * 
-	  * @param lista
-	  * @param node
-	  * @return TRUE if exists node in list Node FALSE else. 
-	  */
-	 public boolean inList(List<Node>lista, Node node){
-		 if(lista != null){
-			 if(lista.isEmpty())
-				return false;
-			
-			 Iterator<Node> it = lista.iterator();
-			 Node no = new Node();
-			 while (it.hasNext() && !no.equals(node)){
-				no = (Node) it.next();
-			 }
-			 return no.equals(node);
-		 }else{
-			 return false;
-		 }
-	 }
 	 
 	 /**
 	  * Print the reconstruct path of solution 
@@ -389,33 +356,5 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		System.out.println("Depth: "+nivel);
 		System.out.println(lS);
 		System.out.println(string);
-	 }
-	 
-	 /**
-	  * 
-	  * @param lastNode
-	  * @return path made to reach the node lastNode
-	  */
-	 public String reconstructPath(Node lastNode,String str){
-		 String string = str;
-		 if(lastNode == null){
-			 return string;
-		 }
-
-		 if(lastNode.getParentAction() != 'N')
-			 string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
-		 else{
-			 string = "StateI: "+lastNode.stateToString()+"\n"+string;
-		 }
-		 return reconstructPath(lastNode.getParent(),string);
-	 }
-	 
-	 /**
-	  * 
-	  * @param lastNode
-	  * @return path made to reach the node lastNode
-	  */
-	 public String reconstructPath(Node lastNode){
-		 return reconstructPath(lastNode, "");
 	 }
 }
