@@ -39,7 +39,6 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 			this.explorado = new ArrayList<Node>();
 			int soma = manhattanDistance(this.nEntrada);
-			System.out.println("#"+soma);
 			if(!this.fronteira.isEmpty() && (soma%2==0)){
 				Node atual = nEntrada;
 				while(!this.fronteira.isEmpty()){
@@ -58,23 +57,23 @@ public class ThinkBehaviour extends OneShotBehaviour{
 					}
 				}
 				if(this.isObjetiveState(atual.getState())){
-					System.out.println("#SUCESS");
-					System.out.println(lS);
-					System.out.println(reconstructPath(atual));
+					reconstructSuccess(atual);
 				}else{
-					System.out.println("#IMPOSSIBLE");
+					System.out.println("#UNSOLVABLE");
+					System.out.println(lS);
+					System.out.println(nEntrada.stateToString());
 				}
 			}
 			else{
-				System.out.println("#IMPOSSIBLE");
-				if(soma%2!=0)
+				System.out.println("#UNSOLVABLE");
+				if(soma%2!=0){
+					System.out.println(lS);
 					System.out.println("Manhatthan Distance odd: "+soma);
+				}
 			}
 		}
 		else{
-			System.out.println("#SUCESS");
-			System.out.println(lS);
-			System.out.println(reconstructPath(nEntrada));
+			reconstructSuccess(nEntrada);
 		}
 	}
 	
@@ -369,6 +368,30 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 }
 	 
 	 /**
+	  * Print the reconstruct path of solution 
+	  * @param lastNode 
+	  */
+	 public void reconstructSuccess(Node lastNode){
+		System.out.println("#SUCCESS");
+		System.out.println(lS);
+		System.out.println("Nodes explored: "+this.explorado.size());
+		int nivel = 0;
+		String string = "";
+		while(lastNode != null){
+			 if(lastNode.getParentAction() != 'N'){
+				 string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
+				 nivel++;
+			 }else{
+				 string = "StateI: "+lastNode.stateToString()+"\n"+string;
+			 }
+			 lastNode = lastNode.getParent();
+		}
+		System.out.println("Depth: "+nivel);
+		System.out.println(lS);
+		System.out.println(string);
+	 }
+	 
+	 /**
 	  * 
 	  * @param lastNode
 	  * @return path made to reach the node lastNode
@@ -380,7 +403,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		 }
 
 		 if(lastNode.getParentAction() != 'N')
-			 string = 	"Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
+			 string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
 		 else{
 			 string = "StateI: "+lastNode.stateToString()+"\n"+string;
 		 }

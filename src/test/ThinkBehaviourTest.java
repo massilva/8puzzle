@@ -16,7 +16,7 @@ public class ThinkBehaviourTest extends TestCase{
 	ThinkBehaviour nl = new ThinkBehaviour();
 	//linha 1
 	int [][] s1 = {{0,1,2},{3,4,5},{6,7,8}};
-	int [][] s2 = {{3,0,5},{7,8,6},{1,2,4}};
+	int [][] s2 = {{3,0,5},{7,8,6},{1,2,4}}; //Não resolvivel
 	int [][] s3 = {{5,3,0},{4,1,6},{8,2,7}};
 	//linha 2
 	int [][] s4 = {{4,1,3},{0,2,6},{7,5,8}};
@@ -24,7 +24,7 @@ public class ThinkBehaviourTest extends TestCase{
 	int [][] s6 = {{7,8,6},{3,5,0},{1,2,4}};
 	//linha 3
 	int [][] s7 = {{2,3,7},{5,4,8},{0,6,1}};
-	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}};
+	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}}; //Não resolvivel
 	int [][] s9 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
 	
 	List <Node> fronteira = new ArrayList<Node>();
@@ -200,6 +200,47 @@ public class ThinkBehaviourTest extends TestCase{
 		list.add(new Node(s1, null, 'N', 0));
 		assertEquals(true, list.contains(new Node(s1, null, 'N', 0)));
 		assertEquals(false, list.contains(new Node(s2, null, 'N', 0)));
+	}
+	
+	@Test
+	public void testExemplo(){
+		
+		/** Wikipedia and book example **/
+		int [][] aux = {{7,2,4},{5,0,6},{8,3,1}};
+		Node auxNode = new Node(aux, null, 'N', 0);
+		assertEquals(18, nl.manhattanDistance(auxNode));
+		
+		/** check the available actions **/
+		int [][] s = {{4,1,2},{3,0,5},{6,7,8}};
+		char [] actions = nl.getAvailableAction(s);
+		char [] ac = {'U','L','R','D'};
+		availableActionAux(actions,ac);
+		
+		/** check all possible results of actions **/
+		Node nState = new Node(s, null, 'N', 0);
+		List<Node>lista = nl.getAllResult(this.fronteira,this.explorado, actions, nState);
+		List<Node>esperado = new ArrayList<Node>();
+		int [][] s1 = {{4,0,2},{3,1,5},{6,7,8}};
+		Node f1 = new Node(s1, nState, 'U', 1);
+		esperado.add(f1);
+		int [][] s2 = {{4,1,2},{0,3,5},{6,7,8}};
+		Node f2 = new Node(s2, nState, 'L', 1);
+		esperado.add(f2);
+		int [][] s3 = {{4,1,2},{3,5,0},{6,7,8}};
+		Node f3 = new Node(s3, nState, 'R', 1);
+		esperado.add(f3);
+		int [][] s4 = {{4,1,2},{3,7,5},{6,0,8}};
+		Node f4 = new Node(s4, nState, 'D', 1);
+		esperado.add(f4);
+		assertEquals(esperado, lista);
+		
+		/** check manhatthanDistance values of states above **/
+		assertEquals(2, nl.manhattanDistance(nState)); //h = 2, c = 0
+		assertEquals(4, nl.manhattanDistance(f1)); // h = 3, c = 1 
+		assertEquals(4, nl.manhattanDistance(f2)); // h = 3, c = 1
+		assertEquals(4, nl.manhattanDistance(f3)); // h = 3, c = 1
+		assertEquals(4, nl.manhattanDistance(f4)); // h = 3, c = 1
+		
 	}
 	
 	/**
