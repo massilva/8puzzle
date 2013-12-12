@@ -3,7 +3,6 @@ package behaviour;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -48,7 +47,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 				if(!this.fronteira.isEmpty()){
 					Node atual = nEntrada;
 					
-					while(!this.fronteira.isEmpty()){
+					while(!this.fronteira.isEmpty() && atual.getCost() <= 60){
 						char [] acoes = this.getAvailableAction(atual.getState());
 						List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
 						this.fronteira.remove(atual);
@@ -73,7 +72,11 @@ public class ThinkBehaviour extends OneShotBehaviour{
 					}else{
 						System.out.println("#UNSOLVABLE");
 						System.out.println(lS);
-						System.out.println(nEntrada.stateToString());
+						if(atual.getCost() > 60){
+							System.out.println("Depth is greater than 60.");
+						}else{
+							System.out.println(nEntrada.stateToString());
+						}
 					}
 				}				
 			}

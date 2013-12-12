@@ -16,15 +16,15 @@ public class ThinkBehaviourTest extends TestCase{
 	ThinkBehaviour nl = new ThinkBehaviour();
 	//linha 1
 	int [][] s1 = {{0,1,2},{3,4,5},{6,7,8}};
-	int [][] s2 = {{3,0,5},{7,8,6},{1,2,4}}; //Não resolvivel
-	int [][] s3 = {{5,3,0},{4,1,6},{8,2,7}};
+	int [][] s2 = {{3,0,5},{7,8,6},{1,2,4}};
+	int [][] s3 = {{5,3,0},{4,1,6},{8,2,7}}; //Não resolvivel
 	//linha 2
 	int [][] s4 = {{4,1,3},{0,2,6},{7,5,8}};
 	int [][] s5 = {{7,2,4},{5,0,6},{8,3,1}};
 	int [][] s6 = {{7,8,6},{3,5,0},{1,2,4}};
 	//linha 3
 	int [][] s7 = {{2,3,7},{5,4,8},{0,6,1}};
-	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}}; //Não resolvivel
+	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}}; 
 	int [][] s9 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
 	
 	List <Node> fronteira = new ArrayList<Node>();
