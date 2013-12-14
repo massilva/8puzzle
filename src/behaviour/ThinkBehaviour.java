@@ -16,19 +16,18 @@ public class ThinkBehaviour extends OneShotBehaviour{
 
 	private static final long serialVersionUID = 1L;
 	private final int COST = 1; //Custo Constant
-	private Node nEntrada; // Nó de entrada
-	private List<Node>fronteira, explorado;
+	private Node nEntrada; // No de entrada
+	private Puzzle agent;
 	private String lS = "----------------------------------------------------";
 	
 	public ThinkBehaviour(){
 		
 	}
 	
-	public ThinkBehaviour(Agent agent, Node nEntrada, List<Node>fronteira, List<Node>explorado){
-		this.myAgent = (Puzzle)agent;
+	public ThinkBehaviour(Agent agent, Node nEntrada){
+		this.myAgent = agent;
 		this.nEntrada = nEntrada;
-		this.fronteira = fronteira;
-		this.explorado = explorado;
+		this.agent = (Puzzle) agent;
 	}
 
 	@Override
@@ -38,28 +37,28 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		
 		if (count%2 == 0)
 		{
-			//Verificando se a entrada passada é um estado objetivo
+			//Verificando se a entrada passada eh um estado objetivo
 			if(!this.isObjetiveState(this.nEntrada.getState())){
 				
-				addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
-				this.explorado = new ArrayList<Node>();
+				addInOrderByManhattanDistance(agent.fronteira,this.nEntrada);
+				agent.explorado = new ArrayList<Node>();
 				
-				if(!this.fronteira.isEmpty()){
+				if(!agent.fronteira.isEmpty()){
 					Node atual = nEntrada;
 					
-					while(!this.fronteira.isEmpty() && atual.getCost() <= 60){
+					while(!agent.fronteira.isEmpty() && atual.getCost() <= 60){
 						char [] acoes = this.getAvailableAction(atual.getState());
-						List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
-						this.fronteira.remove(atual);
+						List<Node> possibilidade = this.getAllResult(agent.fronteira,agent.explorado,acoes,atual);
+						agent.fronteira.remove(atual);
 						
 						for(Node node : possibilidade){
-							addInOrderByManhattanDistance(this.fronteira,node);
+							addInOrderByManhattanDistance(agent.fronteira,node);
 						}
 						
-						this.explorado.add(atual);
+						agent.explorado.add(atual);
 						
-						if(!this.fronteira.isEmpty()){
-							atual = this.fronteira.get(0);
+						if(!agent.fronteira.isEmpty()){
+							atual = agent.fronteira.get(0);
 						}
 						
 						if(this.isObjetiveState(atual.getState())){
@@ -68,7 +67,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 					}
 					
 					if(this.isObjetiveState(atual.getState())){
-						reconstructSuccess(atual);
+						myAgent.addBehaviour(new MoveBehaviour(agent, atual));						
 					}else{
 						System.out.println("#UNSOLVABLE");
 						System.out.println(lS);
@@ -81,7 +80,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 				}				
 			}
 			else{
-				reconstructSuccess(nEntrada);
+				myAgent.addBehaviour(new MoveBehaviour(agent, nEntrada));
 			}
 		}
 		else{
@@ -336,28 +335,4 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			}
 		});
 	}
-	 
-	 /**
-	  * Print the reconstruct path of solution 
-	  * @param lastNode 
-	  */
-	 public void reconstructSuccess(Node lastNode){
-		System.out.println("#SUCCESS");
-		System.out.println(lS);
-		System.out.println("Nodes explored: "+this.explorado.size());
-		int nivel = 0;
-		String string = "";
-		while(lastNode != null){
-			 if(lastNode.getParentAction() != 'N'){
-				 string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
-				 nivel++;
-			 }else{
-				 string = "StateI: "+lastNode.stateToString()+"\n"+string;
-			 }
-			 lastNode = lastNode.getParent();
-		}
-		System.out.println("Depth: "+nivel);
-		System.out.println(lS);
-		System.out.println(string);
-	 }
 }
