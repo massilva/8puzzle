@@ -16,6 +16,8 @@ import java.text.ParseException;
 
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class PuzzleGui extends JFrame {
@@ -43,6 +45,7 @@ public class PuzzleGui extends JFrame {
 	private JButton btnStep;
 	private JButton btnSolve;
 	private JButton btnStep_;
+	private JButton btnBegin;
 	
 	/**
 	 * Create the frame.
@@ -126,16 +129,44 @@ public class PuzzleGui extends JFrame {
 		input8.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				input0.grabFocus();
-				input0.requestFocus();
+				
+				btnBegin.grabFocus();
+				btnBegin.requestFocus();
+//				input0.grabFocus();
+//				input0.requestFocus();
 			}
 		});
 		input8.setColumns(10);
 		input8.setBounds(100, 110, 50, 50);
 		contentPane.add(input8);
 		
-		JButton StartGame = new JButton("Begin");
-		StartGame.addActionListener(new ActionListener() {
+		btnBegin = new JButton("Begin");
+		btnBegin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				int[][] entrada = new int[3][3];
+				try{
+					entrada[0][0] = getInput0();
+					entrada[0][1] = getInput1();
+					entrada[0][2] = getInput2();
+					entrada[1][0] = getInput3();
+					entrada[1][1] = getInput4();
+					entrada[1][2] = getInput5();
+					entrada[2][0] = getInput6();
+					entrada[2][1] = getInput7();
+					entrada[2][2] = getInput8();
+					
+					myAgent.setEntrada(entrada);
+					myAgent.start();
+					
+					btnBegin.setText("New");
+					
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		});
+		btnBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				int[][] entrada = new int[3][3];
@@ -152,80 +183,83 @@ public class PuzzleGui extends JFrame {
 					
 					myAgent.setEntrada(entrada);
 					myAgent.start();
+					
+					btnBegin.setText("New");
+					
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 			}
 		});
-		StartGame.setBounds(80, 165, 70, 23);
-		contentPane.add(StartGame);			
+		btnBegin.setBounds(160, 74, 80, 23);
+		contentPane.add(btnBegin);			
 		
 		output1 = new JTextField();
 		output1.setHorizontalAlignment(SwingConstants.CENTER);
 		output1.setEditable(false);
 		output1.setColumns(10);
-		output1.setBounds(214, 10, 50, 50);
+		output1.setBounds(300, 10, 50, 50);
 		contentPane.add(output1);
 		
 		output2 = new JTextField();
 		output2.setHorizontalAlignment(SwingConstants.CENTER);
 		output2.setEditable(false);
 		output2.setColumns(10);
-		output2.setBounds(264, 10, 50, 50);
+		output2.setBounds(350, 10, 50, 50);
 		contentPane.add(output2);
 		
 		output0 = new JTextField();
 		output0.setHorizontalAlignment(SwingConstants.CENTER);
 		output0.setEditable(false);
 		output0.setColumns(10);
-		output0.setBounds(164, 10, 50, 50);
+		output0.setBounds(250, 10, 50, 50);
 		contentPane.add(output0);
 		
 		output3 = new JTextField();
 		output3.setHorizontalAlignment(SwingConstants.CENTER);
 		output3.setEditable(false);
 		output3.setColumns(10);
-		output3.setBounds(164, 60, 50, 50);
+		output3.setBounds(250, 60, 50, 50);
 		contentPane.add(output3);
 		
 		output4 = new JTextField();
 		output4.setHorizontalAlignment(SwingConstants.CENTER);
 		output4.setEditable(false);
 		output4.setColumns(10);
-		output4.setBounds(214, 60, 50, 50);
+		output4.setBounds(300, 60, 50, 50);
 		contentPane.add(output4);
 		
 		output5 = new JTextField();
 		output5.setHorizontalAlignment(SwingConstants.CENTER);
 		output5.setEditable(false);
 		output5.setColumns(10);
-		output5.setBounds(264, 60, 50, 50);
+		output5.setBounds(350, 60, 50, 50);
 		contentPane.add(output5);
 		
 		output6 = new JTextField();
 		output6.setHorizontalAlignment(SwingConstants.CENTER);
 		output6.setEditable(false);
 		output6.setColumns(10);
-		output6.setBounds(164, 110, 50, 50);
+		output6.setBounds(250, 110, 50, 50);
 		contentPane.add(output6);
 		
 		output7 = new JTextField();
 		output7.setHorizontalAlignment(SwingConstants.CENTER);
 		output7.setEditable(false);
 		output7.setColumns(10);
-		output7.setBounds(214, 110, 50, 50);
+		output7.setBounds(300, 110, 50, 50);
 		contentPane.add(output7);
 		
 		output8 = new JTextField();
 		output8.setHorizontalAlignment(SwingConstants.CENTER);
 		output8.setEditable(false);
 		output8.setColumns(10);
-		output8.setBounds(264, 110, 50, 50);
+		output8.setBounds(350, 110, 50, 50);
 		contentPane.add(output8);
 		
-		btnStep = new JButton("Step +");
+		btnStep = new JButton(">");
 		btnStep.setVisible(false);
-		btnStep.setBounds(236, 165, 75, 23);
+		btnStep.setBounds(331, 165, 45, 23);
 		contentPane.add(btnStep);
 		
 		btnSolve = new JButton("Solve");
@@ -234,12 +268,12 @@ public class PuzzleGui extends JFrame {
 			}
 		});
 		btnSolve.setVisible(false);
-		btnSolve.setBounds(0, 165, 70, 23);
+		btnSolve.setBounds(145, 165, 110, 23);
 		contentPane.add(btnSolve);
 		
-		btnStep_ = new JButton("Step -");
+		btnStep_ = new JButton("<");
 		btnStep_.setVisible(false);
-		btnStep_.setBounds(164, 165, 70, 23);
+		btnStep_.setBounds(276, 165, 45, 23);
 		contentPane.add(btnStep_);
 	}
 	
@@ -249,7 +283,7 @@ public class PuzzleGui extends JFrame {
 		int centerX = (int)screenSize.getWidth() / 2;
 		int centerY = (int)screenSize.getHeight() / 2;
 		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
-		this.setSize(330, 230);		
+		this.setSize(418, 230);		
 		super.setVisible(true);
 	}
 	
