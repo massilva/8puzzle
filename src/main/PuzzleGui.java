@@ -40,6 +40,9 @@ public class PuzzleGui extends JFrame {
 	private JTextField output6;
 	private JTextField output7;
 	private JTextField output8;
+	private JButton btnStep;
+	private JButton btnSolve;
+	private JButton btnStep_;
 	
 	/**
 	 * Create the frame.
@@ -154,7 +157,7 @@ public class PuzzleGui extends JFrame {
 				}
 			}
 		});
-		StartGame.setBounds(110, 168, 89, 23);
+		StartGame.setBounds(80, 165, 70, 23);
 		contentPane.add(StartGame);			
 		
 		output1 = new JTextField();
@@ -219,6 +222,25 @@ public class PuzzleGui extends JFrame {
 		output8.setColumns(10);
 		output8.setBounds(264, 110, 50, 50);
 		contentPane.add(output8);
+		
+		btnStep = new JButton("Step +");
+		btnStep.setVisible(false);
+		btnStep.setBounds(236, 165, 75, 23);
+		contentPane.add(btnStep);
+		
+		btnSolve = new JButton("Solve");
+		btnSolve.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSolve.setVisible(false);
+		btnSolve.setBounds(0, 165, 70, 23);
+		contentPane.add(btnSolve);
+		
+		btnStep_ = new JButton("Step -");
+		btnStep_.setVisible(false);
+		btnStep_.setBounds(164, 165, 70, 23);
+		contentPane.add(btnStep_);
 	}
 	
 	public void showGui(){
@@ -272,5 +294,14 @@ public class PuzzleGui extends JFrame {
 	}
 	public int getInput1() {
 		return Integer.parseInt(input1.getText());
+	}
+	public JButton getBtnStep() {
+		return btnStep;
+	}
+	public JButton getBtnSolve() {
+		return btnSolve;
+	}
+	public JButton getBtnStep_() {
+		return btnStep_;
 	}
 }
