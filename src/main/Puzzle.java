@@ -23,6 +23,7 @@ public class Puzzle extends Agent{
 			e.printStackTrace();
 		}
 		gui.showGui();
+		System.out.println("Teste");
 	}
 	
 	public void start()
