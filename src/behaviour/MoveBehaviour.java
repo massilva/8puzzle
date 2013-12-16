@@ -24,13 +24,13 @@ public class MoveBehaviour extends OneShotBehaviour{
 	private ListIterator<Node> li = null;
 	private boolean prev = false, next = false; 
 	private int cont = 0;
-	
+
 	public MoveBehaviour(Puzzle agent, Node nSaida){
 		this.nSaida = nSaida;
 		this.agent = (Puzzle) agent;
 		this.li = (ListIterator<Node>) path.listIterator();
 	}
-	
+
 	@Override
 	public void action() {
 		createPath(nSaida);
@@ -45,40 +45,40 @@ public class MoveBehaviour extends OneShotBehaviour{
 			{
 				final Iterator<Node> it = path.iterator();
 				Timer timer = new Timer();
-	            TimerTask tarefa = new TimerTask(){
-	                 public void run()     
-	                 {  
-	                	 if(!it.hasNext()){
-	   		               cancel();
-		                 }else{
-		                	 Node atual = it.next();
-		                	 try{
-		                		cont++;
-		                		if(cont < path.size()){
-		                			agent.gui.colorize(atual,path.get(cont).getParentAction());
-		                		}
-		                		agent.gui.setOutput(new int[3][3]);
-		                		agent.gui.setOutput(atual.getState());
-		                	 } catch (Exception e) {        
-		                         e.printStackTrace();        
-		                	 }
-		                 }
-	                 }
-	            };
-	            timer.schedule(tarefa, 0,1000);
+				TimerTask tarefa = new TimerTask(){
+					public void run()     
+					{  
+						if(!it.hasNext()){
+							cancel();
+						}else{
+							Node atual = it.next();
+							try{
+								cont++;
+								if(cont < path.size()){
+									agent.gui.colorize(atual,path.get(cont).getParentAction());
+								}
+								agent.gui.setOutput(new int[3][3]);
+								agent.gui.setOutput(atual.getState());
+							} catch (Exception e) {        
+								e.printStackTrace();        
+							}
+						}
+					}
+				};
+				timer.schedule(tarefa, 0,1000);
 			}
 		});
-		
+
 		this.li = (ListIterator<Node>) path.listIterator();
 		printNext();
-		
+
 		btnStep.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				printNext();
 			}
 		});
-		
+
 		btnStep_.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -86,7 +86,7 @@ public class MoveBehaviour extends OneShotBehaviour{
 			}
 		});
 	}
-	
+
 	public void printNext(){
 		if(this.li.hasNext()){
 			if(prev)
@@ -115,10 +115,10 @@ public class MoveBehaviour extends OneShotBehaviour{
 	{
 		if (a.getParent() != null)
 			createPath(a.getParent());
-		
+
 		this.path.add(a);
 	}
-	
+
 	public int getCont() {
 		return cont;
 	}
@@ -128,23 +128,23 @@ public class MoveBehaviour extends OneShotBehaviour{
 	}
 
 	/**
-	* Print the reconstruct path of solution 
-	* @param lastNode 
-	*/
-	public void reconstructSuccess(Node lastNode){
+	 * Print the reconstruct path of solution 
+	 * @param lastNode 
+	 */
+	 public void reconstructSuccess(Node lastNode){
 		System.out.println("#SUCCESS");
 		System.out.println(lS);
 		System.out.println("Nodes explored: "+agent.explorado.size());
 		int nivel = 0;
 		String string = "";
 		while(lastNode != null){
-			 if(lastNode.getParentAction() != 'N'){
-				 string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
-				 nivel++;
-			 }else{
-				 string = "StateI: "+lastNode.stateToString()+"\n"+string;
-			 }
-			 lastNode = lastNode.getParent();
+			if(lastNode.getParentAction() != 'N'){
+				string = "Action: "+lastNode.getParentAction()+" ==> State: "+lastNode.stateToString()+"\n"+string;
+				nivel++;
+			}else{
+				string = "StateI: "+lastNode.stateToString()+"\n"+string;
+			}
+			lastNode = lastNode.getParent();
 		}
 		System.out.println("Depth: "+nivel);
 		System.out.println(lS);

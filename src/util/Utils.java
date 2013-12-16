@@ -3,7 +3,7 @@ package util;
 import model.Position;
 
 public class Utils {
-	
+
 	/**
 	 * 
 	 * @param state
@@ -25,5 +25,5 @@ public class Utils {
 		}
 		return new Position(i,j);
 	}
-	
+
 }

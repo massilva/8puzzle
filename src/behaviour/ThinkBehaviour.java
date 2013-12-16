@@ -22,11 +22,11 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	private Puzzle agent;
 	private String lS = "----------------------------------------------------";
 	private Utils util = new Utils();
-	
+
 	public ThinkBehaviour(){
-		
+
 	}
-	
+
 	public ThinkBehaviour(Agent agent, Node nEntrada){
 		this.myAgent = agent;
 		this.nEntrada = nEntrada;
@@ -35,7 +35,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 
 	@Override
 	public void action(){
-		
+
 		int count = getNumberInversions(nEntrada.getState());
 		if (count%2 == 0)
 		{
@@ -88,22 +88,22 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			}
 		}
 	}
-	
+
 	public int getNumberInversions(int [][] entrada)
 	{
 		int count = 0;
-//		Contando o numero de inversoes na entrada fornecida		
+		//		Contando o numero de inversoes na entrada fornecida		
 		for (int i = 0; i < 9; i++)
 			for (int j = i; j < 9; j++)
 				if ((entrada[i/3][i%3] != 0) &&
-					(entrada[j/3][j%3] != 0) && 
-					(entrada[i/3][i%3] > entrada[j/3][j%3]))
+						(entrada[j/3][j%3] != 0) && 
+						(entrada[i/3][i%3] > entrada[j/3][j%3]))
 				{
-		            count++;
+					count++;
 				}
 		return count;
 	}
-	
+
 	/**
 	 * @param number, you want to known to its default position
 	 * @return Position containing this default position
@@ -138,7 +138,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		some += node.getCost();
 		return some;
 	}
-	
+
 	/**
 	 * 
 	 * @param state 
@@ -162,7 +162,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param state 
@@ -217,7 +217,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param action
@@ -229,7 +229,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		node.setParent(nEstado);
 		node.setCost(nEstado.getCost()+COST);
 		node.setParentAction(action);
-		
+
 		Position emBranco = util.getTileEmpty(nEstado.getState());
 		Position auxPosition = emBranco;
 		switch (action){
@@ -246,7 +246,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			auxPosition = new Position(emBranco.getI()-1,emBranco.getJ());
 			break;
 		}
-		
+
 		if(auxPosition.getI() >= 3 || auxPosition.getJ() >= 3 || auxPosition.getI() < 0 || auxPosition.getJ() < 0){
 			node = null;
 		}else{
@@ -256,13 +256,13 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			estado[auxPosition.getI()][auxPosition.getJ()] = 0;
 			node.setState(estado);
 		}
-		
+
 		if(node == null)
 			return null;
-		
+
 		return (explorado.contains(node)||fronteira.contains(node)) ? null : node;
 	}
-	
+
 	/**
 	 * 
 	 * @param actions
@@ -279,7 +279,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		}
 		return resultados;
 	}
-	
+
 	/**
 	 * 
 	 * @param matriz
@@ -294,7 +294,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		}
 		return cp;
 	}
-	
+
 	/**
 	 * 
 	 * @param fronteira

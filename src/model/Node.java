@@ -12,7 +12,7 @@ public class Node {
 	private Node parent; //node to which this node is descended
 	private char parentAction; //Action executed by parent for to arrive the this node
 	private int cost; //sum of costs to the current state
-	
+
 	/** Constructors **/
 	public Node(){
 		this.state = new int[3][3];
@@ -29,7 +29,7 @@ public class Node {
 	}
 
 	/** SETs and GETs **/
-	
+
 	public int[][] getState() {
 		return state;
 	}
@@ -69,7 +69,7 @@ public class Node {
 		}
 		return st;
 	}
-	
+
 	@Override
 	public String toString(){
 		String st = "";
@@ -77,7 +77,7 @@ public class Node {
 		return "Node [state=" + st + ", parent=" + parent
 				+ ", parentAction=" + parentAction + ", cost=" + cost + "]";
 	} 
-	
+
 	@Override
 	public boolean equals(Object o){
 		Node node = (Node)o;
@@ -93,22 +93,22 @@ public class Node {
 			resultado = resultado && node.getParent().equals(this.parent);
 		}
 		resultado =  resultado && (node.getParentAction() == this.parentAction);
-		*/
+		 */
 		int [][] estado = node.getState();
 		int i = 0, j = 0;
 		//if(resultado){
-			while((i < estado.length) && (estado[i][j] == state[i][j])){
-				while((j < estado.length) && (estado[i][j] == state[i][j])){
-					j++;
-				}
-				if(j == estado.length){
-					i++;
-					j = 0;
-				}
-				else{
-					break;
-				}
+		while((i < estado.length) && (estado[i][j] == state[i][j])){
+			while((j < estado.length) && (estado[i][j] == state[i][j])){
+				j++;
 			}
+			if(j == estado.length){
+				i++;
+				j = 0;
+			}
+			else{
+				break;
+			}
+		}
 		//}
 		return (resultado) && (i == estado.length) && (j == 0);
 	}

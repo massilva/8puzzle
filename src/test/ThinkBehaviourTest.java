@@ -27,10 +27,10 @@ public class ThinkBehaviourTest extends TestCase{
 	int [][] s7 = {{2,3,7},{5,4,8},{0,6,1}};
 	int [][] s8 = {{8,6,7},{2,5,4},{3,0,1}}; 
 	int [][] s9 = {{1,2,3},{4,5,6},{8,7,0}}; //Não resolvivel
-	
+
 	List <Node> fronteira = new ArrayList<Node>();
 	List <Node> explorado = new ArrayList<Node>();
-	
+
 	@Test
 	public void testGetPositionDefault(){
 		Position position = new Position(0,0);
@@ -52,13 +52,13 @@ public class ThinkBehaviourTest extends TestCase{
 		position = new Position(2,2);
 		assertEquals(position, nl.getPositionDefault(8));
 	}
-	
+
 	@Test
 	public void testManhattanDistance(){	
 		assertEquals(0, nl.manhattanDistance(new Node(s1, null, 'N', 0)));
 		assertEquals(28, nl.manhattanDistance(new Node(s5, null, 'N', 10)));
 	}
-	
+
 	@Test
 	public void testIsObjetiveState(){
 		assertEquals(true,  nl.isObjetiveState(s1));
@@ -73,7 +73,7 @@ public class ThinkBehaviourTest extends TestCase{
 		int [][] s10 = {{0,1,2},{3,4,5},{8,7,6}};
 		assertEquals(false, nl.isObjetiveState(s10));
 	}
-	
+
 	@Test
 	public void testGetTileEmpty(){
 		Utils util = new Utils();
@@ -90,7 +90,7 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(new Position(2,1),util.getTileEmpty(s8));
 		assertEquals(new Position(2,2),util.getTileEmpty(s9));
 	}
-	
+
 	@Test
 	public void testAvailableAction(){
 		char [] a1 = {'R','D'};
@@ -112,7 +112,7 @@ public class ThinkBehaviourTest extends TestCase{
 		char [] a9 = {'L','U'};
 		availableActionAux(nl.getAvailableAction(s9),a9);
 	}
-	
+
 	@Test
 	public void testResult(){
 		Node p1 = new Node(s1, null, 'N', 0);
@@ -122,7 +122,7 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(p1, t1.getParent());
 		assertEquals(n1,t1);
 	}
-	
+
 	@Test
 	public void testGetAllResult(){
 		Node nState = new Node(s2, null, 'N', 0);
@@ -137,7 +137,7 @@ public class ThinkBehaviourTest extends TestCase{
 		lista.add(new Node(e3,nState,'R',1));
 		assertEquals(lista,nodes);
 	}
-	
+
 	@Test
 	public void testAddInOrder(){
 		List<Node> esperado = new ArrayList<Node>();
@@ -150,7 +150,7 @@ public class ThinkBehaviourTest extends TestCase{
 		nl.addInOrderByManhattanDistance(lista,new Node(s1, null, 'N', 0));
 		assertEquals(esperado, lista);
 	}
-	
+
 	@Test
 	public void testListContains(){
 		List<Node> list = new ArrayList<Node>();
@@ -158,21 +158,21 @@ public class ThinkBehaviourTest extends TestCase{
 		assertEquals(true, list.contains(new Node(s1, null, 'N', 0)));
 		assertEquals(false, list.contains(new Node(s2, null, 'N', 0)));
 	}
-	
+
 	@Test
 	public void testExemplo(){
-		
+
 		/** Wikipedia and book example **/
 		int [][] aux = {{7,2,4},{5,0,6},{8,3,1}};
 		Node auxNode = new Node(aux, null, 'N', 0);
 		assertEquals(18, nl.manhattanDistance(auxNode));
-		
+
 		/** check the available actions **/
 		int [][] s = {{4,1,2},{3,0,5},{6,7,8}};
 		char [] actions = nl.getAvailableAction(s);
 		char [] ac = {'U','L','R','D'};
 		availableActionAux(actions,ac);
-		
+
 		/** check all possible results of actions **/
 		Node nState = new Node(s, null, 'N', 0);
 		List<Node>lista = nl.getAllResult(this.fronteira,this.explorado, actions, nState);
@@ -190,37 +190,37 @@ public class ThinkBehaviourTest extends TestCase{
 		Node f4 = new Node(s4, nState, 'D', 1);
 		esperado.add(f4);
 		assertEquals(esperado, lista);
-		
+
 		/** check manhatthanDistance values of states above **/
 		assertEquals(2, nl.manhattanDistance(nState)); //h = 2, c = 0
 		assertEquals(4, nl.manhattanDistance(f1)); // h = 3, c = 1 
 		assertEquals(4, nl.manhattanDistance(f2)); // h = 3, c = 1
 		assertEquals(4, nl.manhattanDistance(f3)); // h = 3, c = 1
 		assertEquals(4, nl.manhattanDistance(f4)); // h = 3, c = 1
-		
+
 	}
-	
+
 	@Test
 	public void testNumberInvertions(){
 		int [][] s = {{1,0,3},{2,4,5},{6,7,8}};
 		assertEquals(1, nl.getNumberInversions(s));
-		
+
 		int [][] s1 = {{7,0,2},{8,5,3},{6,4,1}};
 		assertEquals(19, nl.getNumberInversions(s1));
-		
+
 		int [][] s2 = {{2,0,7},{8,5,3},{6,4,1}};
 		assertEquals(18, nl.getNumberInversions(s2));
-		
+
 		int [][] s3 = {{3,1,2},{0,4,5},{6,7,8}};
 		assertEquals(2, nl.getNumberInversions(s3));
-		
+
 		int [][] s4 = {{0,1,2},{3,4,5},{6,7,8}};
 		assertEquals(0, nl.getNumberInversions(s4));
-		
+
 		int [][] s5 = {{1,0,2},{3,4,5},{6,7,8}};
 		assertEquals(0, nl.getNumberInversions(s5));		
 	}
-	
+
 	/**
 	 * Helper function
 	 * @param result
@@ -234,5 +234,5 @@ public class ThinkBehaviourTest extends TestCase{
 			i++;
 		}
 	}
-	
+
 }

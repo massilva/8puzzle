@@ -3,7 +3,7 @@ package model;
 public class Position {
 	private int i;
 	private int j;
-	
+
 	public Position() {
 		super();
 	}
@@ -34,11 +34,11 @@ public class Position {
 	public String toString() {
 		return "Position [i=" + i + ", j=" + j + "]";
 	}
-	
+
 	@Override
 	public boolean equals(Object o){
 		Position position = (Position)o;
 		return (position.getI() == this.i && position.getJ() == this.j);
 	}
-	
+
 }

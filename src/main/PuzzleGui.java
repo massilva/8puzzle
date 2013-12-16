@@ -51,32 +51,32 @@ public class PuzzleGui extends JFrame {
 	private JButton btnSolve;
 	private JButton btnStep_;
 	private JButton btnBegin;
-	
+
 	/**
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
 	public PuzzleGui(Puzzle a) throws ParseException{
 		myAgent = a;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		input0 = new JFormattedTextField(new MaskFormatter("#"));
 		input0.setHorizontalAlignment(SwingConstants.CENTER);
 		input0.setBounds(0, 10, 50, 50);
 		contentPane.add(input0);
 		input0.setColumns(1);
-		
+
 		input1 = new JFormattedTextField(new MaskFormatter("#"));
 		input1.setHorizontalAlignment(SwingConstants.CENTER);
 		input1.setColumns(10);
 		input1.setBounds(50, 10, 50, 50);
 		contentPane.add(input1);
-		
+
 		input2 = new JFormattedTextField(new MaskFormatter("#"));
 		input2.setHorizontalAlignment(SwingConstants.CENTER);
 		input2.addFocusListener(new FocusAdapter() {
@@ -89,19 +89,19 @@ public class PuzzleGui extends JFrame {
 		input2.setColumns(10);
 		input2.setBounds(100, 10, 50, 50);
 		contentPane.add(input2);
-		
+
 		input3 = new JFormattedTextField(new MaskFormatter("#"));
 		input3.setHorizontalAlignment(SwingConstants.CENTER);
 		input3.setColumns(10);
 		input3.setBounds(0, 60, 50, 50);
 		contentPane.add(input3);
-		
+
 		input4 = new JFormattedTextField(new MaskFormatter("#"));
 		input4.setHorizontalAlignment(SwingConstants.CENTER);
 		input4.setColumns(10);
 		input4.setBounds(50, 60, 50, 50);
 		contentPane.add(input4);
-		
+
 		input5 = new JFormattedTextField(new MaskFormatter("#"));
 		input5.setHorizontalAlignment(SwingConstants.CENTER);
 		input5.addFocusListener(new FocusAdapter() {
@@ -114,19 +114,19 @@ public class PuzzleGui extends JFrame {
 		input5.setColumns(10);
 		input5.setBounds(100, 60, 50, 50);
 		contentPane.add(input5);
-		
+
 		input6 = new JFormattedTextField(new MaskFormatter("#"));
 		input6.setHorizontalAlignment(SwingConstants.CENTER);
 		input6.setColumns(10);
 		input6.setBounds(0, 110, 50, 50);
 		contentPane.add(input6);
-		
+
 		input7 = new JFormattedTextField(new MaskFormatter("#"));
 		input7.setHorizontalAlignment(SwingConstants.CENTER);
 		input7.setColumns(10);
 		input7.setBounds(50, 110, 50, 50);
 		contentPane.add(input7);
-		
+
 		input8 = new JFormattedTextField(new MaskFormatter("#"));
 		input8.setHorizontalAlignment(SwingConstants.CENTER);
 		input8.addFocusListener(new FocusAdapter() {
@@ -186,75 +186,75 @@ public class PuzzleGui extends JFrame {
 		});
 		btnBegin.setBounds(160, 74, 80, 23);
 		contentPane.add(btnBegin);			
-		
+
 		output1 = new JTextField();
 		output1.setHorizontalAlignment(SwingConstants.CENTER);
 		output1.setEditable(false);
 		output1.setColumns(10);
 		output1.setBounds(300, 10, 50, 50);
 		contentPane.add(output1);
-		
+
 		output2 = new JTextField();
 		output2.setHorizontalAlignment(SwingConstants.CENTER);
 		output2.setEditable(false);
 		output2.setColumns(10);
 		output2.setBounds(350, 10, 50, 50);
 		contentPane.add(output2);
-		
+
 		output0 = new JTextField();
 		output0.setHorizontalAlignment(SwingConstants.CENTER);
 		output0.setEditable(false);
 		output0.setColumns(10);
 		output0.setBounds(250, 10, 50, 50);
 		contentPane.add(output0);
-		
+
 		output3 = new JTextField();
 		output3.setHorizontalAlignment(SwingConstants.CENTER);
 		output3.setEditable(false);
 		output3.setColumns(10);
 		output3.setBounds(250, 60, 50, 50);
 		contentPane.add(output3);
-		
+
 		output4 = new JTextField();
 		output4.setHorizontalAlignment(SwingConstants.CENTER);
 		output4.setEditable(false);
 		output4.setColumns(10);
 		output4.setBounds(300, 60, 50, 50);
 		contentPane.add(output4);
-		
+
 		output5 = new JTextField();
 		output5.setHorizontalAlignment(SwingConstants.CENTER);
 		output5.setEditable(false);
 		output5.setColumns(10);
 		output5.setBounds(350, 60, 50, 50);
 		contentPane.add(output5);
-		
+
 		output6 = new JTextField();
 		output6.setHorizontalAlignment(SwingConstants.CENTER);
 		output6.setEditable(false);
 		output6.setColumns(10);
 		output6.setBounds(250, 110, 50, 50);
 		contentPane.add(output6);
-		
+
 		output7 = new JTextField();
 		output7.setHorizontalAlignment(SwingConstants.CENTER);
 		output7.setEditable(false);
 		output7.setColumns(10);
 		output7.setBounds(300, 110, 50, 50);
 		contentPane.add(output7);
-		
+
 		output8 = new JTextField();
 		output8.setHorizontalAlignment(SwingConstants.CENTER);
 		output8.setEditable(false);
 		output8.setColumns(10);
 		output8.setBounds(350, 110, 50, 50);
 		contentPane.add(output8);
-		
+
 		btnStep = new JButton(">");
 		btnStep.setVisible(false);
 		btnStep.setBounds(331, 165, 45, 23);
 		contentPane.add(btnStep);
-		
+
 		btnSolve = new JButton("Solve");
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -263,13 +263,13 @@ public class PuzzleGui extends JFrame {
 		btnSolve.setVisible(false);
 		btnSolve.setBounds(145, 165, 110, 23);
 		contentPane.add(btnSolve);
-		
+
 		btnStep_ = new JButton("<");
 		btnStep_.setVisible(false);
 		btnStep_.setBounds(276, 165, 45, 23);
 		contentPane.add(btnStep_);
 	}
-	
+
 	public void showGui(){
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -279,22 +279,22 @@ public class PuzzleGui extends JFrame {
 		this.setSize(418, 230);		
 		super.setVisible(true);
 	}
-	
+
 	public void setOutput(int[][] o)
 	{
 		output0.setText(Integer.toString(o[0][0]));
 		output1.setText(Integer.toString(o[0][1]));
 		output2.setText(Integer.toString(o[0][2]));
-		
+
 		output3.setText(Integer.toString(o[1][0]));
 		output4.setText(Integer.toString(o[1][1]));
 		output5.setText(Integer.toString(o[1][2]));
-		
+
 		output6.setText(Integer.toString(o[2][0]));
 		output7.setText(Integer.toString(o[2][1]));
 		output8.setText(Integer.toString(o[2][2]));		
 	}
-	
+
 	public int getInput8() {
 		return Integer.parseInt(input8.getText());
 	}
@@ -335,51 +335,51 @@ public class PuzzleGui extends JFrame {
 		Utils util = new Utils();
 		int col = util.getTileEmpty(node.getState()).getI();
 		int ln = util.getTileEmpty(node.getState()).getJ();
-		
+
 		setColor(col, ln, Color.GRAY);
 		switch (action){
-			case 'L':
-				ln--;
-				break;
-			case 'R':
-				ln++;
-				break;
-			case 'U':
-				col--;
-				break;
-			case 'D':
-				col++;
+		case 'L':
+			ln--;
+			break;
+		case 'R':
+			ln++;
+			break;
+		case 'U':
+			col--;
+			break;
+		case 'D':
+			col++;
 			break;
 		}
 		setColor(col, ln, Color.GREEN);
 	}
-	
+
 	private void setColor(int col, int ln, Color color){
 		if(col == 0){
-			 if(ln == 0){
-				 output0.setBackground(color);
-			 }else if(ln == 1){
-				 output1.setBackground(color);
-			 }else{
-				 output2.setBackground(color);
-			 }
-		 }else if(col == 1){
-			 if(ln == 0){
-				 output3.setBackground(color);
-			 }else if(ln == 1){
-				 output4.setBackground(color);
-			 }else{
-				 output5.setBackground(color);
-			 }
-		 }else{
-			 if(ln == 0){
-				 output6.setBackground(color);
-			 }else if(ln == 1){
-				 output7.setBackground(color);
-			 }else{
-				 output8.setBackground(color);
-			 }
-		 }
-		
+			if(ln == 0){
+				output0.setBackground(color);
+			}else if(ln == 1){
+				output1.setBackground(color);
+			}else{
+				output2.setBackground(color);
+			}
+		}else if(col == 1){
+			if(ln == 0){
+				output3.setBackground(color);
+			}else if(ln == 1){
+				output4.setBackground(color);
+			}else{
+				output5.setBackground(color);
+			}
+		}else{
+			if(ln == 0){
+				output6.setBackground(color);
+			}else if(ln == 1){
+				output7.setBackground(color);
+			}else{
+				output8.setBackground(color);
+			}
+		}
+
 	}
 }
