@@ -35,38 +35,32 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	public void action(){
 		
 		int count = getNumberInversions(nEntrada.getState());
-		
 		if (count%2 == 0)
 		{
+			System.out.println(lS);
+			System.out.println("Iniciado");
+			System.out.println(lS);
 			//Verificando se a entrada passada é um estado objetivo
 			if(!this.isObjetiveState(this.nEntrada.getState())){
-				
 				addInOrderByManhattanDistance(this.fronteira,this.nEntrada);
 				this.explorado = new ArrayList<Node>();
-				
 				if(!this.fronteira.isEmpty()){
 					Node atual = nEntrada;
-					
 					while(!this.fronteira.isEmpty() && atual.getCost() <= 60){
 						char [] acoes = this.getAvailableAction(atual.getState());
 						List<Node> possibilidade = this.getAllResult(this.fronteira,this.explorado,acoes,atual);
 						this.fronteira.remove(atual);
-						
 						for(Node node : possibilidade){
 							addInOrderByManhattanDistance(this.fronteira,node);
 						}
-						
 						this.explorado.add(atual);
-						
 						if(!this.fronteira.isEmpty()){
 							atual = this.fronteira.get(0);
 						}
-						
 						if(this.isObjetiveState(atual.getState())){
 							break;
 						}
 					}
-					
 					if(this.isObjetiveState(atual.getState())){
 						reconstructSuccess(atual);
 					}else{
