@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JButton;
 
 import main.Puzzle;
@@ -41,11 +44,25 @@ public class MoveBehaviour extends OneShotBehaviour{
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				Iterator<Node> it = path.iterator();
-				while(it.hasNext()){
-					Node atual = it.next();
-					agent.gui.setOutput(atual.getState());	
-				}
+				final Iterator<Node> it = path.iterator();
+				Timer timer = new Timer();
+	            TimerTask tarefa = new TimerTask(){
+	                 public void run()     
+	                 {  
+	                	 if(!it.hasNext()){
+	   		               cancel();
+		                 }else{
+		                	 Node atual = it.next();
+		                	 try{
+		                	   agent.gui.setOutput(new int[3][3]);
+		                	   agent.gui.setOutput(atual.getState());
+		                	 } catch (Exception e) {        
+		                         e.printStackTrace();        
+		                	 }
+		                 }
+	                 }
+	            };
+	            timer.schedule(tarefa, 0,1000);
 			}
 		});
 		
