@@ -12,7 +12,7 @@ public class NodeTest extends TestCase{
 		Node node = new Node();
 		assertEquals(0, node.getCost());
 		assertEquals(null, node.getParent());
-		assertEquals(null, node.getParentAction());
+		assertEquals('N', node.getParentAction());
 	}
 
 }
