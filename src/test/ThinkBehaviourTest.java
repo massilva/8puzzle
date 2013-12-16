@@ -9,6 +9,7 @@ import model.Position;
 
 import org.junit.Test;
 
+import util.Utils;
 import behaviour.ThinkBehaviour;
 
 public class ThinkBehaviourTest extends TestCase{
@@ -75,18 +76,19 @@ public class ThinkBehaviourTest extends TestCase{
 	
 	@Test
 	public void testGetTileEmpty(){
+		Utils util = new Utils();
 		//linha 1
-		assertEquals(new Position(0,0),nl.getTileEmpty(s1));
-		assertEquals(new Position(0,1),nl.getTileEmpty(s2));
-		assertEquals(new Position(0,2),nl.getTileEmpty(s3));
+		assertEquals(new Position(0,0),util.getTileEmpty(s1));
+		assertEquals(new Position(0,1),util.getTileEmpty(s2));
+		assertEquals(new Position(0,2),util.getTileEmpty(s3));
 		//linha 2
-		assertEquals(new Position(1,0),nl.getTileEmpty(s4));
-		assertEquals(new Position(1,1),nl.getTileEmpty(s5));
-		assertEquals(new Position(1,2),nl.getTileEmpty(s6));
+		assertEquals(new Position(1,0),util.getTileEmpty(s4));
+		assertEquals(new Position(1,1),util.getTileEmpty(s5));
+		assertEquals(new Position(1,2),util.getTileEmpty(s6));
 		//linha 3
-		assertEquals(new Position(2,0),nl.getTileEmpty(s7));
-		assertEquals(new Position(2,1),nl.getTileEmpty(s8));
-		assertEquals(new Position(2,2),nl.getTileEmpty(s9));
+		assertEquals(new Position(2,0),util.getTileEmpty(s7));
+		assertEquals(new Position(2,1),util.getTileEmpty(s8));
+		assertEquals(new Position(2,2),util.getTileEmpty(s9));
 	}
 	
 	@Test

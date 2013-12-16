@@ -12,6 +12,8 @@ import model.Position;
 
 import java.util.List;
 
+import util.Utils;
+
 public class ThinkBehaviour extends OneShotBehaviour{
 
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	private Node nEntrada; // No de entrada
 	private Puzzle agent;
 	private String lS = "----------------------------------------------------";
+	private Utils util = new Utils();
 	
 	public ThinkBehaviour(){
 		
@@ -89,7 +92,6 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	public int getNumberInversions(int [][] entrada)
 	{
 		int count = 0;
-		
 //		Contando o numero de inversoes na entrada fornecida		
 		for (int i = 0; i < 9; i++)
 			for (int j = i; j < 9; j++)
@@ -167,7 +169,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	 * @return the actions available for @param state
 	 */
 	public char [] getAvailableAction(int [][] state){
-		Position emBranco = getTileEmpty(state);
+		Position emBranco = util.getTileEmpty(state);
 		//coluna
 		if(emBranco.getJ() == 0){
 			if(emBranco.getI() == 0){ //linha
@@ -218,28 +220,6 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	
 	/**
 	 * 
-	 * @param state
-	 * @return Position where is the empty tile 
-	 */
-	public Position getTileEmpty(int [][] state){
-		int i = 0, j = 0;
-		while(i < state.length){
-			j = 0;
-			while(j < state.length && state[i][j] != 0){
-				j++;
-			}
-			if(j == state.length){
-				i++;
-			}
-			else{
-				break;
-			}
-		}
-		return new Position(i,j);
-	}
-	
-	/**
-	 * 
 	 * @param action
 	 * @param nState
 	 * @return Node resultant of to run action in nState if not exist in closed list 
@@ -250,7 +230,7 @@ public class ThinkBehaviour extends OneShotBehaviour{
 		node.setCost(nEstado.getCost()+COST);
 		node.setParentAction(action);
 		
-		Position emBranco = getTileEmpty(nEstado.getState());
+		Position emBranco = util.getTileEmpty(nEstado.getState());
 		Position auxPosition = emBranco;
 		switch (action){
 		case 'R':
