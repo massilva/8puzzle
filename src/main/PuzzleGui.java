@@ -1,4 +1,5 @@
 package main;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -16,6 +17,10 @@ import java.text.ParseException;
 
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import model.Node;
+import util.Utils;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -52,7 +57,6 @@ public class PuzzleGui extends JFrame {
 	 * @throws ParseException 
 	 */
 	public PuzzleGui(Puzzle a) throws ParseException{
-		
 		myAgent = a;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +82,6 @@ public class PuzzleGui extends JFrame {
 		input2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-//				input3.transferFocus();
 				input3.grabFocus();
 				input3.requestFocus();
 			}
@@ -129,17 +132,13 @@ public class PuzzleGui extends JFrame {
 		input8.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				
 				btnBegin.grabFocus();
 				btnBegin.requestFocus();
-//				input0.grabFocus();
-//				input0.requestFocus();
 			}
 		});
 		input8.setColumns(10);
 		input8.setBounds(100, 110, 50, 50);
 		contentPane.add(input8);
-		
 		btnBegin = new JButton("Begin");
 		btnBegin.addKeyListener(new KeyAdapter() {
 			@Override
@@ -155,12 +154,9 @@ public class PuzzleGui extends JFrame {
 					entrada[2][0] = getInput6();
 					entrada[2][1] = getInput7();
 					entrada[2][2] = getInput8();
-					
 					myAgent.setEntrada(entrada);
 					myAgent.start();
-					
 					btnBegin.setText("New");
-					
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -180,12 +176,9 @@ public class PuzzleGui extends JFrame {
 					entrada[2][0] = getInput6();
 					entrada[2][1] = getInput7();
 					entrada[2][2] = getInput8();
-					
 					myAgent.setEntrada(entrada);
 					myAgent.start();
-					
 					btnBegin.setText("New");
-					
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -337,5 +330,56 @@ public class PuzzleGui extends JFrame {
 	}
 	public JButton getBtnStep_() {
 		return btnStep_;
+	}
+	public void colorize(Node node,char action){
+		Utils util = new Utils();
+		int col = util.getTileEmpty(node.getState()).getI();
+		int ln = util.getTileEmpty(node.getState()).getJ();
+		
+		setColor(col, ln, Color.GRAY);
+		switch (action){
+			case 'L':
+				ln--;
+				break;
+			case 'R':
+				ln++;
+				break;
+			case 'U':
+				col--;
+				break;
+			case 'D':
+				col++;
+			break;
+		}
+		setColor(col, ln, Color.GREEN);
+	}
+	
+	private void setColor(int col, int ln, Color color){
+		if(col == 0){
+			 if(ln == 0){
+				 output0.setBackground(color);
+			 }else if(ln == 1){
+				 output1.setBackground(color);
+			 }else{
+				 output2.setBackground(color);
+			 }
+		 }else if(col == 1){
+			 if(ln == 0){
+				 output3.setBackground(color);
+			 }else if(ln == 1){
+				 output4.setBackground(color);
+			 }else{
+				 output5.setBackground(color);
+			 }
+		 }else{
+			 if(ln == 0){
+				 output6.setBackground(color);
+			 }else if(ln == 1){
+				 output7.setBackground(color);
+			 }else{
+				 output8.setBackground(color);
+			 }
+		 }
+		
 	}
 }

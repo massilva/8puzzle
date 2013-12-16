@@ -23,6 +23,7 @@ public class MoveBehaviour extends OneShotBehaviour{
 	private String lS = "----------------------------------------------------";
 	private ListIterator<Node> li = null;
 	private boolean prev = false, next = false; 
+	private int cont = 0;
 	
 	public MoveBehaviour(Puzzle agent, Node nSaida){
 		this.nSaida = nSaida;
@@ -33,14 +34,12 @@ public class MoveBehaviour extends OneShotBehaviour{
 	@Override
 	public void action() {
 		createPath(nSaida);
-//		reconstructSuccess(nSaida);
 		JButton btnSolve = agent.gui.getBtnSolve();
 		btnSolve.setVisible(true);
 		JButton btnStep = agent.gui.getBtnStep();
 		btnStep.setVisible(true);
 		JButton btnStep_ = agent.gui.getBtnStep_();
 		btnStep_.setVisible(true);
-		
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -54,8 +53,12 @@ public class MoveBehaviour extends OneShotBehaviour{
 		                 }else{
 		                	 Node atual = it.next();
 		                	 try{
-		                	   agent.gui.setOutput(new int[3][3]);
-		                	   agent.gui.setOutput(atual.getState());
+		                		cont++;
+		                		if(cont < path.size()){
+		                			agent.gui.colorize(atual,path.get(cont).getParentAction());
+		                		}
+		                		agent.gui.setOutput(new int[3][3]);
+		                		agent.gui.setOutput(atual.getState());
 		                	 } catch (Exception e) {        
 		                         e.printStackTrace();        
 		                	 }
@@ -116,6 +119,14 @@ public class MoveBehaviour extends OneShotBehaviour{
 		this.path.add(a);
 	}
 	
+	public int getCont() {
+		return cont;
+	}
+
+	public void setCont(int cont) {
+		this.cont = cont;
+	}
+
 	/**
 	* Print the reconstruct path of solution 
 	* @param lastNode 
