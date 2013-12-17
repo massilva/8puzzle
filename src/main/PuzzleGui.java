@@ -309,32 +309,42 @@ public class PuzzleGui extends JFrame {
 		output8.setText(Integer.toString(o[2][2]));		
 	}
 
+	public int parseInt(String valor){
+		int v = -1;
+		try{
+			v = Integer.parseInt(valor);
+		}catch(NumberFormatException nfe){
+			nfe.getStackTrace();
+		}
+		return v;
+	}
+	
 	public int getInput8() {
-		return Integer.parseInt(input8.getText());
+		return parseInt(input8.getText());
 	}
 	public int getInput3() {
-		return Integer.parseInt(input3.getText());
+		return parseInt(input3.getText());
 	}
 	public int getInput4() {
-		return Integer.parseInt(input4.getText());
+		return parseInt(input4.getText());
 	}
 	public int getInput5() {
-		return Integer.parseInt(input5.getText());
+		return parseInt(input5.getText());
 	}
 	public int getInput7() {
-		return Integer.parseInt(input7.getText());
+		return parseInt(input7.getText());
 	}
 	public int getInput2() {
-		return Integer.parseInt(input2.getText());
+		return parseInt(input2.getText());
 	}
 	public int getInput6() {
-		return Integer.parseInt(input6.getText());
+		return parseInt(input6.getText());
 	}
 	public int getInput0() {
-		return Integer.parseInt(input0.getText());
+		return parseInt(input0.getText());
 	}
 	public int getInput1() {
-		return Integer.parseInt(input1.getText());
+		return parseInt(input1.getText());
 	}
 	public JButton getBtnStep() {
 		return btnStep;

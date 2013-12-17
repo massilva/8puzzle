@@ -38,54 +38,58 @@ public class ThinkBehaviour extends OneShotBehaviour{
 	@Override
 	public void action(){
 
-		int count = getNumberInversions(nEntrada.getState());
-		if (count%2 == 0)
-		{
-			System.out.println(lS);
-			System.out.println("Iniciado");
-			System.out.println(lS);
-			//Verificando se a entrada passada eh um estado objetivo
-			if(!this.isObjetiveState(this.nEntrada.getState())){
-				addInOrderByManhattanDistance(agent.fronteira,this.nEntrada);
-				agent.explorado = new ArrayList<Node>();
-				if(!agent.fronteira.isEmpty()){
-					Node atual = nEntrada;
-					while(!agent.fronteira.isEmpty() && atual.getCost() <= 60){
-						char [] acoes = this.getAvailableAction(atual.getState());
-						List<Node> possibilidade = this.getAllResult(agent.fronteira,agent.explorado,acoes,atual);
-						agent.fronteira.remove(atual);
-						for(Node node : possibilidade){
-							addInOrderByManhattanDistance(agent.fronteira,node);
-						}
-						agent.explorado.add(atual);
-						if(!agent.fronteira.isEmpty()){
-							atual = agent.fronteira.get(0);
+		if(isValid(nEntrada.getState())){
+			int count = getNumberInversions(nEntrada.getState());
+			if (count%2 == 0)
+			{
+				System.out.println(lS);
+				System.out.println("Iniciado");
+				System.out.println(lS);
+				//Verificando se a entrada passada eh um estado objetivo
+				if(!this.isObjetiveState(this.nEntrada.getState())){
+					addInOrderByManhattanDistance(agent.fronteira,this.nEntrada);
+					agent.explorado = new ArrayList<Node>();
+					if(!agent.fronteira.isEmpty()){
+						Node atual = nEntrada;
+						while(!agent.fronteira.isEmpty() && atual.getCost() <= 60){
+							char [] acoes = this.getAvailableAction(atual.getState());
+							List<Node> possibilidade = this.getAllResult(agent.fronteira,agent.explorado,acoes,atual);
+							agent.fronteira.remove(atual);
+							for(Node node : possibilidade){
+								addInOrderByManhattanDistance(agent.fronteira,node);
+							}
+							agent.explorado.add(atual);
+							if(!agent.fronteira.isEmpty()){
+								atual = agent.fronteira.get(0);
+							}
+							if(this.isObjetiveState(atual.getState())){
+								break;
+							}
 						}
 						if(this.isObjetiveState(atual.getState())){
-							break;
+							myAgent.addBehaviour(new MoveBehaviour(agent, atual));						
+						}else{
+							String msg = "#UNSOLVABLE\n"+lS;
+							if(atual.getCost() > 60){
+								msg += "\nDepth is greater than 60.";
+							}
+							JOptionPane.showMessageDialog(null, msg);
 						}
-					}
-					if(this.isObjetiveState(atual.getState())){
-						myAgent.addBehaviour(new MoveBehaviour(agent, atual));						
-					}else{
-						String msg = "#UNSOLVABLE\n"+lS;
-						if(atual.getCost() > 60){
-							msg += "\nDepth is greater than 60.";
-						}
-						JOptionPane.showMessageDialog(null, msg);
-					}
-				}				
+					}				
+				}
+				else{
+					myAgent.addBehaviour(new MoveBehaviour(agent, nEntrada));
+				}
 			}
 			else{
-				myAgent.addBehaviour(new MoveBehaviour(agent, nEntrada));
+				String msg = "#UNSOLVABLE";
+				if(count%2!=0){
+					msg += "\n"+lS+"\nNumber of inversions is odd: " + count;
+				}
+				JOptionPane.showMessageDialog(null,msg);
 			}
-		}
-		else{
-			String msg = "#UNSOLVABLE";
-			if(count%2!=0){
-				msg += "\n"+lS+"\nNumber of inversions is odd: " + count;
-			}
-			JOptionPane.showMessageDialog(null,msg);
+		}else{
+			JOptionPane.showMessageDialog(null,"The tiles can not be empty!");
 		}
 	}
 
@@ -309,4 +313,25 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			}
 		});
 	}
+	
+	/**
+	 * 
+	 * @param state
+	 * @return TRUE if state is valid, not have -1 in some position, FALSE else.
+	 */
+	public boolean isValid(int [][] state){
+		int i = 0,j = 0;
+		while(i < state.length && state[i][j] != -1){
+			while(j < state.length && state[i][j] != -1) {
+				j++;
+			}
+			if(j != state.length){
+				break;
+			}
+			i++;
+			j = 0;
+		}
+		return (i == state.length && j == 0);
+	}
+	
 }
