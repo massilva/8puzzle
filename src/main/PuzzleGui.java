@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -51,7 +52,8 @@ public class PuzzleGui extends JFrame {
 	private JButton btnSolve;
 	private JButton btnStep_;
 	private JButton btnBegin;
-
+	private JLabel steps;
+	
 	/**
 	 * Create the frame.
 	 * @throws ParseException 
@@ -262,13 +264,19 @@ public class PuzzleGui extends JFrame {
 			}
 		});
 		btnSolve.setVisible(false);
-		btnSolve.setBounds(145, 165, 110, 23);
+		btnSolve.setBounds(160, 165, 80, 23);
 		contentPane.add(btnSolve);
 
 		btnStep_ = new JButton("<");
 		btnStep_.setVisible(false);
 		btnStep_.setBounds(276, 165, 45, 23);
 		contentPane.add(btnStep_);
+		
+		steps = new JLabel("Total steps: ");
+		steps.setVisible(false);
+		steps.setBounds(10, 165, 120, 23);
+		contentPane.add(steps);
+		
 	}
 
 	public void showGui(){
@@ -331,7 +339,11 @@ public class PuzzleGui extends JFrame {
 	}
 	public JButton getBtnStep_() {
 		return btnStep_;
+	}	
+	public JLabel getSteps() {
+		return steps;
 	}
+
 	public void colorize(Node node,char action){
 		Utils util = new Utils();
 		int col = util.getTileEmpty(node.getState()).getI();

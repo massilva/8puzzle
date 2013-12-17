@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import main.Puzzle;
 import model.Node;
@@ -40,7 +41,10 @@ public class MoveBehaviour extends OneShotBehaviour{
 		btnStep.setVisible(true);
 		JButton btnStep_ = agent.gui.getBtnStep_();
 		btnStep_.setVisible(true);
-
+		JLabel steps = agent.gui.getSteps();
+		steps.setText(steps.getText()+(path.size()-1));
+		steps.setVisible(true);
+		
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
