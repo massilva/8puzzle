@@ -139,6 +139,7 @@ public class PuzzleGui extends JFrame {
 		input8.setColumns(10);
 		input8.setBounds(100, 110, 50, 50);
 		contentPane.add(input8);
+		
 		btnBegin = new JButton("Begin");
 		btnBegin.addKeyListener(new KeyAdapter() {
 			@Override
@@ -184,7 +185,7 @@ public class PuzzleGui extends JFrame {
 				}
 			}
 		});
-		btnBegin.setBounds(160, 74, 80, 23);
+		btnBegin.setBounds(160, 40, 80, 80);
 		contentPane.add(btnBegin);			
 
 		output1 = new JTextField();
@@ -335,8 +336,8 @@ public class PuzzleGui extends JFrame {
 		Utils util = new Utils();
 		int col = util.getTileEmpty(node.getState()).getI();
 		int ln = util.getTileEmpty(node.getState()).getJ();
-
-		setColor(col, ln, Color.GRAY);
+		
+		setColor(col, ln, Color.WHITE);
 		switch (action){
 		case 'L':
 			ln--;

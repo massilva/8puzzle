@@ -12,6 +12,8 @@ import model.Position;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import util.Utils;
 
 public class ThinkBehaviour extends OneShotBehaviour{
@@ -66,13 +68,11 @@ public class ThinkBehaviour extends OneShotBehaviour{
 					if(this.isObjetiveState(atual.getState())){
 						myAgent.addBehaviour(new MoveBehaviour(agent, atual));						
 					}else{
-						System.out.println("#UNSOLVABLE");
-						System.out.println(lS);
+						String msg = "#UNSOLVABLE\n"+lS;
 						if(atual.getCost() > 60){
-							System.out.println("Depth is greater than 60.");
-						}else{
-							System.out.println(nEntrada.stateToString());
+							msg += "\nDepth is greater than 60.";
 						}
+						JOptionPane.showMessageDialog(null, msg);
 					}
 				}				
 			}
@@ -81,11 +81,11 @@ public class ThinkBehaviour extends OneShotBehaviour{
 			}
 		}
 		else{
-			System.out.println("#UNSOLVABLE");
+			String msg = "#UNSOLVABLE";
 			if(count%2!=0){
-				System.out.println(lS);
-				System.out.println("Number of inversions is odd: " + count);
+				msg += "\n"+lS+"\nNumber of inversions is odd: " + count;
 			}
+			JOptionPane.showMessageDialog(null,msg);
 		}
 	}
 

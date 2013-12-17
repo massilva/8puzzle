@@ -40,6 +40,7 @@ public class MoveBehaviour extends OneShotBehaviour{
 		btnStep.setVisible(true);
 		JButton btnStep_ = agent.gui.getBtnStep_();
 		btnStep_.setVisible(true);
+
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
