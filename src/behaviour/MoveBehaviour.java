@@ -3,7 +3,6 @@ package behaviour;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,27 +45,26 @@ public class MoveBehaviour extends OneShotBehaviour{
 		steps.setText(steps.getText()+(path.size()-1));
 		steps.setVisible(true);
 		
-		System.out.println(path.get(0));
 		step = agent.gui.getStep();
 		step.setVisible(true);
+
+		this.li = (ListIterator<Node>) path.listIterator();
 		
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				final Iterator<Node> it = path.iterator();
 				Timer timer = new Timer();
 				TimerTask tarefa = new TimerTask(){
 					public void run()     
 					{  
-						if(!it.hasNext()){
+						if(!li.hasNext()){
 							cancel();
 						}else{
-							Node atual = it.next();
+							Node atual = li.next();
 							try{
 								cont++;
 								if(cont < path.size()){
 									step.setText("Step: "+cont);
-									agent.gui.colorize(atual,path.get(cont).getParentAction());
 								}
 								agent.gui.setOutput(new int[3][3]);
 								agent.gui.setOutput(atual.getState());
@@ -80,12 +78,13 @@ public class MoveBehaviour extends OneShotBehaviour{
 			}
 		});
 
-		this.li = (ListIterator<Node>) path.listIterator();
 		printNext();
-
 		btnStep.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				if(cont <= path.size())
+					cont++;
+				step.setText("Step: "+cont);
 				printNext();
 			}
 		});
@@ -93,6 +92,9 @@ public class MoveBehaviour extends OneShotBehaviour{
 		btnStep_.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				if(cont > 0)
+					cont--;
+				step.setText("Step: "+cont);
 				printPrevious();
 			}
 		});
