@@ -52,7 +52,7 @@ public class PuzzleGui extends JFrame {
 	private JButton btnSolve;
 	private JButton btnStep_;
 	private JButton btnBegin;
-	private JLabel steps;
+	private JLabel steps, step;
 	
 	/**
 	 * Create the frame.
@@ -189,7 +189,7 @@ public class PuzzleGui extends JFrame {
 		});
 		btnBegin.setBounds(160, 40, 80, 80);
 		contentPane.add(btnBegin);			
-
+		
 		output1 = new JTextField();
 		output1.setHorizontalAlignment(SwingConstants.CENTER);
 		output1.setEditable(false);
@@ -276,6 +276,11 @@ public class PuzzleGui extends JFrame {
 		steps.setVisible(false);
 		steps.setBounds(10, 165, 120, 23);
 		contentPane.add(steps);
+
+		step = new JLabel();
+		step.setVisible(false);
+		step.setBounds(160, 120, 80, 23);
+		contentPane.add(step);
 		
 	}
 
@@ -342,6 +347,9 @@ public class PuzzleGui extends JFrame {
 	}	
 	public JLabel getSteps() {
 		return steps;
+	}
+	public JLabel getStep() {
+		return step;
 	}
 
 	public void colorize(Node node,char action){

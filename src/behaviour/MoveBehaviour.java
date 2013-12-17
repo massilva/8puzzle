@@ -25,7 +25,8 @@ public class MoveBehaviour extends OneShotBehaviour{
 	private ListIterator<Node> li = null;
 	private boolean prev = false, next = false; 
 	private int cont = 0;
-
+	private JLabel step = new JLabel();
+	
 	public MoveBehaviour(Puzzle agent, Node nSaida){
 		this.nSaida = nSaida;
 		this.agent = (Puzzle) agent;
@@ -45,6 +46,10 @@ public class MoveBehaviour extends OneShotBehaviour{
 		steps.setText(steps.getText()+(path.size()-1));
 		steps.setVisible(true);
 		
+		System.out.println(path.get(0));
+		step = agent.gui.getStep();
+		step.setVisible(true);
+		
 		btnSolve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -60,6 +65,7 @@ public class MoveBehaviour extends OneShotBehaviour{
 							try{
 								cont++;
 								if(cont < path.size()){
+									step.setText("Step: "+cont);
 									agent.gui.colorize(atual,path.get(cont).getParentAction());
 								}
 								agent.gui.setOutput(new int[3][3]);
