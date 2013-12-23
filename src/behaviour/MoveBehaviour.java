@@ -82,7 +82,7 @@ public class MoveBehaviour extends OneShotBehaviour{
 		btnStep.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if(cont <= path.size())
+				if(cont < (path.size()-1))
 					cont++;
 				step.setText("Step: "+cont);
 				printNext();
